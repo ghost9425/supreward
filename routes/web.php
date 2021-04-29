@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-
+// use App\Http\Controllers\InstallController;
+// use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ComplaintController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,9 +15,10 @@ use App\Http\Controllers\AuthController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 Route::get('/', function () {
-    return redirect('/login');
+    return redirect('/complaint');
 });
+Route::get('/complaint', [ComplaintController::class, 'index'])->name('Complaint.index');
+Route::get('/complaint/add', [ComplaintController::class, 'add'])->name('Complaint.add');
+Route::post('/complaint/add-save', [ComplaintController::class, 'addSave'])->name('Complaint.addSave');
+

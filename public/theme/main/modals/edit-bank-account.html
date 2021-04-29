@@ -1,0 +1,73 @@
+<div class="modal-dialog modal-md" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="modal-title">Edit Bank Account</div>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form action="">
+        <div class="modal-form-box">
+          <div class="form-group row">
+            <label for="bank" class="col-4 col-form-label">Bank</label>
+            <div class="col-8">
+              <select class="mdb-select md-form md-outline" id="bank">
+                <option value="0">Select bank</option>
+                <option value="1" selected>Kasikorn Bank</option>
+                <option value="2">Bank number Two</option>
+                <option value="2">Bank Three</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="account-number" class="col-4 col-form-label">Account number</label>
+            <div class="col-8">
+              <input type="text" class="form-control" id="account-number" placeholder="Enter account number" value="065-2-72340-8">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="name" class="col-4 col-form-label">Name</label>
+            <div class="col-8">
+              <input type="text" class="form-control" id="name" placeholder="Enter Name" value="Samai">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="surname" class="col-4 col-form-label">Surname</label>
+            <div class="col-8">
+              <input type="text" class="form-control" id="surname" placeholder="Enter Surname" value="Wongnok">
+            </div>
+          </div>
+          <div class="form-group row mb-2">
+            <div class="col-12">
+              <div class="switch">
+                <label>
+                  <input type="checkbox" checked>
+                  <span class="lever ml-0"></span>
+                  <span class="text-13">Receive deposits to this account</span>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-12">
+              <div class="switch">
+                <label>
+                  <input type="checkbox" checked>
+                  <span class="lever ml-0"></span>
+                  <span class="text-13">Allows withdrawals from this account</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer justify-content-start">
+      <div class="apply-btn-box">
+        <button type="button" class="btn btn-yellow font-weight-bold mr-1">Save Changes</button>
+        <button type="button" class="btn btn-outline-yellow font-weight-bold" data-dismiss="modal">No, cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

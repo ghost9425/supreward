@@ -72,6 +72,13 @@
         listAjax();
     });
 
+$("#tb-body-complaint").on("click", ".btn-edit", function(){
+    $('#myModalLoad').modal('show');
+    let id = $(this).data("id");
+    let url = "{{ route('Complaint.edit') }}/"+id;
+    window.location.href = url;
+});
+
     function listAjax() {
     // let search = $("#search").val();
     let url = "{{ route('Complaint.listAjax') }}";
@@ -94,14 +101,14 @@
                         if( v.support ) {
                             support = v.support;
                         }
-                        html    +=  '<tr role="row">'+
-                                        '<td class="text-center">'+ (k+1) +'</td>'+
-                                        '<td>'+ v.name +'</td>'+
-                                        '<td>'+ v.prefix +'</td>'+
-                                        '<td class="text-center">'+ v.detaill +'</td>'+
-                                        '<td>'+ v.image +'</td>'+
-                                        '<td id="date_change" class="text-center text-nowrap">'+ v.updated_at +'</td>'+
-                                        '<td class="text-center">'+
+                        html    +=  '<tr role="row" style="vertical-align: middle;">'+
+                                        '<td class="text-center align-middle">'+ (k+1) +'</td>'+
+                                        '<td class="align-middle">'+ v.name +'</td>'+
+                                        '<td class="align-middle">'+ v.prefix +'</td>'+
+                                        '<td class="text-center align-middle">'+ v.detaill +'</td>'+
+                                        '<td style="text-align:center;">'+ v.show_image +'</td>'+
+                                        '<td id="date_change" class="text-center text-nowrap align-middle">'+ v.updated +'</td>'+
+                                        '<td class="text-center align-middle">'+
                                             '<a data-id="'+v.id+'" class="link btn-edit"><i class="fas fa-pencil-alt"></i></a>'+
                                         '</td>'+
                                     '</tr>';

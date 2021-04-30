@@ -5,6 +5,7 @@
 <head>
     <meta charset="utf-8" /><meta name="viewport" content="width=1480" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>PTGACC</title>
     <link rel="icon" href="{{asset("img/logo.png")}}"/>
     <link rel="stylesheet" href={{ asset('https://use.fontawesome.com/releases/v5.8.2/css/all.css')}} />

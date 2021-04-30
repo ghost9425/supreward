@@ -50,142 +50,21 @@
                                 <input type="text" id="detaill" name="detaill" class="form-control" autocomplete="off" maxlength="255">
                             </div>
                         </div>
-                        {{-- <div class="form-group row inputform">
-                            <label for="permission" class="col-4 col-form-label" set-lan="text:Phone number">Admin <label style="color: red;">&nbsp;*</label></label>
-                            <div class="col-8">
-                                <div class="select-outline">
-                                    <select class="mdb-select initialized" id="user_id" name="user_id">
-                                        <option value="">Select Admin</option>
-                                        @if( count($users) > 0 )
-                                            @foreach( $users as $user)
-                                            <option value="{{ $user->id }}">{{ $user->user.' ('.$user->name.')' }}</option>
-                                            @endforeach
-                                        @endif
-                                    </select>
-                                </div>
-                            </div>
-                        </div> --}}
                     </div>
-
-                    {{-- <div class="col-1"></div>
-                    <div class="form-group col-5">
+                    <div class="form-group col-12">
                         <div class="form-group row inputform">
-                            <label for="nickname" class="col-4 col-form-label" set-lan="text:Nickname">Company Percent<label style="color: red;">&nbsp;*</label></label>
-                            <div class="col-8">
-                                <input type="text" name="percent" id="percent" class="form-control" autocomplete="off" onkeypress="clsPercentOnly(event)" maxlength="30">
-                                <small class="text-muted form-text">Enter only number (0-9) or letter ( , ) , /.</small>
+                            <label for="c_name" class="col-2 col-form-label">Attachment</label>
+                            <div class="col-5">
+                                <input type="file" name="image_complaint" id="image_complaint" class="form-control" autocomplete="off">
+                                <small class="text-muted form-text">Only images (.jpg, .jpeg, .gif, .png) and files (.pdf).</small>
                             </div>
-                        </div>
-
-                    </div> --}}
+                            <div class="text-center p-3" style="text-align: center">
+                                {{-- <img id="edit_show_image" src="{{get_path_no_image()}}" /> --}}
+                            </div>
+                         </div>
+                    </div>
 
                 </div>
-                {{-- <div id="box-product">
-                    <h4 set-lan="text:Status">Products</h4>
-                    <div class="form-row">
-                        <div class="form-group col-5">
-                            <div class="form-group row inputform">
-                                <label for="company" class="col-4 col-form-label" set-lan="html:Username-">1. Product Name</label>
-                                <div class="col-4">
-                                    <input type="text" name="products[]" class="form-control" autocomplete="off" onkeypress="clsAlphaNoOnly(event)" maxlength="30" >
-                                    <small class="text-muted form-text">Enter only number (0-9) or letter (A-Z, a-z).</small>
-                                </div>
-                                <div class="col-4">
-                                    <div class="select-outline">
-                                        <select class="mdb-select initialized" name="type[]">
-                                            <option value="general">General</option>
-                                            <option value="other">Other</option>
-                                        </select>
-                                    </div>
-                                    <small class="text-muted form-text">Select Type</small>
-                                </div>
-                            </div>
-                            <div class="form-group row inputform">
-                                <label for="company" class="col-4 col-form-label" set-lan="html:Username-">2. Product Name</label>
-                                <div class="col-4">
-                                    <input type="text" name="products[]" class="form-control" autocomplete="off" onkeypress="clsAlphaNoOnly(event)" maxlength="30" >
-                                    <small class="text-muted form-text">Enter only number (0-9) or letter (A-Z, a-z).</small>
-                                </div>
-                                <div class="col-4">
-                                    <div class="select-outline">
-                                        <select class="mdb-select initialized" name="type[]">
-                                            <option value="general">General</option>
-                                            <option value="other">Other</option>
-                                        </select>
-                                    </div>
-                                    <small class="text-muted form-text">Select Type</small>
-                                </div>
-                            </div>
-                            <div class="form-group row inputform">
-                                <label for="company" class="col-4 col-form-label" set-lan="html:Username-">3. Product Name</label>
-                                <div class="col-4">
-                                    <input type="text" name="products[]" class="form-control" autocomplete="off" onkeypress="clsAlphaNoOnly(event)" maxlength="30" >
-                                    <small class="text-muted form-text">Enter only number (0-9) or letter (A-Z, a-z).</small>
-                                </div>
-                                <div class="col-4">
-                                    <div class="select-outline">
-                                        <select class="mdb-select initialized" name="type[]">
-                                            <option value="general">General</option>
-                                            <option value="other">Other</option>
-                                        </select>
-                                    </div>
-                                    <small class="text-muted form-text">Select Type</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-1"></div>
-                        <div class="form-group col-5">
-                            <div class="form-group row inputform">
-                                <label for="company" class="col-4 col-form-label" set-lan="html:Username-">4. Product Name</label>
-                                <div class="col-4">
-                                    <input type="text" name="products[]" class="form-control" autocomplete="off" onkeypress="clsAlphaNoOnly(event)" maxlength="30" >
-                                    <small class="text-muted form-text">Enter only number (0-9) or letter (A-Z, a-z).</small>
-                                </div>
-                                <div class="col-4">
-                                    <div class="select-outline">
-                                        <select class="mdb-select initialized" name="type[]">
-                                            <option value="general">General</option>
-                                            <option value="other">Other</option>
-                                        </select>
-                                    </div>
-                                    <small class="text-muted form-text">Select Type</small>
-                                </div>
-                            </div>
-                            <div class="form-group row inputform">
-                                <label for="company" class="col-4 col-form-label" set-lan="html:Username-">5. Product Name</label>
-                                <div class="col-4">
-                                    <input type="text" name="products[]" class="form-control" autocomplete="off" onkeypress="clsAlphaNoOnly(event)" maxlength="30" >
-                                    <small class="text-muted form-text">Enter only number (0-9) or letter (A-Z, a-z).</small>
-                                </div>
-                                <div class="col-4">
-                                    <div class="select-outline">
-                                        <select class="mdb-select initialized" name="type[]">
-                                            <option value="general">General</option>
-                                            <option value="other">Other</option>
-                                        </select>
-                                    </div>
-                                    <small class="text-muted form-text">Select Type</small>
-                                </div>
-                            </div>
-                            <div class="form-group row inputform">
-                                <label for="company" class="col-4 col-form-label" set-lan="html:Username-">6. Product Name</label>
-                                <div class="col-4">
-                                    <input type="text" name="products[]" class="form-control" autocomplete="off" onkeypress="clsAlphaNoOnly(event)" maxlength="30" >
-                                    <small class="text-muted form-text">Enter only number (0-9) or letter (A-Z, a-z).</small>
-                                </div>
-                                <div class="col-4">
-                                    <div class="select-outline">
-                                        <select class="mdb-select initialized" name="type[]">
-                                            <option value="general">General</option>
-                                            <option value="other">Other</option>
-                                        </select>
-                                    </div>
-                                    <small class="text-muted form-text">Select Type</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
                 <div class="form-row">
                     <div class="col-12" style="text-align: center; margin-top: 1rem;">
                         <button class="btn btn-yellow font-weight-bold waves-effect waves-light" type="submit">Add Complaint</button>
@@ -199,7 +78,7 @@
 
 @section('js')
 <script>
-    $( "#form-add-complaint" ).on('submit', function(e) {
+$( "#form-add-complaint" ).on('submit', function(e) {
     e.preventDefault();
 
     let name = $("#name").val().trim();

@@ -38,7 +38,7 @@
         <div class="table-wrapper">
             <div class="row m-0">
                 <div class="col-sm-12 p-0">
-                    <table class="table table-border" id="table_user" role="grid">
+                    <table class="table table-border" id="table_complaint" role="grid">
                         <thead class="rgba-green-slight">
                             <tr role="row">
                                 <th style="width: 4%">No</th>
@@ -50,7 +50,7 @@
                                 <th style="width: 7%">Edit</th>
                             </tr>
                         </thead>
-                        <tbody id="tb-body-user"></tbody>
+                        <tbody id="tb-body-complaint"></tbody>
                         <tfoot class="rgba-yellow-slight">
                             <tr class="total">
                                 <td></td>
@@ -69,3 +69,61 @@
     </div>
 </div>
 @endsection
+@section('js')
+<script>
+    $( document ).ready(function() {
+        listAjax();
+    });
+
+    function listAjax() {
+    // let search = $("#search").val();
+    let url = "{{ route('Complaint.listAjax') }}";
+
+    $.ajax({
+        url: url,
+        type: "GET",
+        cache: false,
+        dataType: "json",
+        beforeSend: function() {
+            $('#myModalLoad').modal('show');
+        },
+        success: function(res) {
+            let html = "";
+            if( res.status==1 ) {
+
+                if( res.complaints.length > 0 ) {
+                    $(res.complaints).each(function(k,v) {
+                        let support = "";
+                        if( v.support ) {
+                            support = v.support;
+                        }
+                        html    +=  '<tr role="row">'+
+                                        '<td class="text-center">'+ (k+1) +'</td>'+
+                                        '<td>'+ v.name +'</td>'+
+                                        '<td>'+ v.prefix +'</td>'+
+                                        '<td class="text-center">'+ v.detaill +'</td>'+
+                                        '<td>'+ v.image +'</td>'+
+                                        '<td id="date_change" class="text-center text-nowrap">'+ v.updated_at +'</td>'+
+                                        '<td class="text-center">'+
+                                            '<a data-id="'+v.id+'" class="link btn-edit"><i class="fas fa-pencil-alt"></i></a>'+
+                                        '</td>'+
+                                    '</tr>';
+                        console.log(v.updated_at)
+                    });
+                } else {
+                    html    +=  '<tr role="row"><td class="text-center" colspan="8">No Data</td></tr>';
+                }
+
+            }
+            $("#tb-body-complaint").html(html);
+            $('#myModalLoad').modal('hide');
+        },
+        error: function (xhr, status, error) {
+            alert("invalid list ajax");
+            $('#myModalLoad').modal('hide');
+        },
+    });
+    }
+</script>
+@endsection
+

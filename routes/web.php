@@ -22,5 +22,5 @@ Route::get('/complaint', [ComplaintController::class, 'index'])->name('Complaint
 Route::get('/complaint/add', [ComplaintController::class, 'add'])->name('Complaint.add');
 Route::post('/complaint/add-save', [ComplaintController::class, 'addSave'])->name('Complaint.addSave');
 Route::get('/complaint/list-ajax', [ComplaintController::class, 'listAjax'])->name('Complaint.listAjax');
-// Route::post('/complaint/ajax-get', [ComplaintController::class, 'ajaxGet'])->name('Complaint.ajaxGet');
+
 

@@ -95,8 +95,8 @@
                                     </a>
                                 </li>
                                 <li id="menuCompany">
-                                    {{-- <a href="{{ route('Company.index') }}" class="waves-effect"> --}}
-                                    <a href="#" class="waves-effect">
+                                    {{-- <a href="{{ route('Complaint.index') }}" class="waves-effect"> --}}
+                                        <a href="{{ route('Complaint.index') }}" class="waves-effect">
                                         <span class="sv-normal submain" set-lan="text:Add Member">Complaint list</span>
                                     </a>
                                 </li>

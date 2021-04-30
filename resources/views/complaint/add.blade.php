@@ -8,11 +8,8 @@
     <div class="col-12">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                {{-- <li class="breadcrumb-item">
-                    <a href="{{ route('Company.index') }}" class="linkNav">Company</a>
-                </li> --}}
                 <li class="breadcrumb-item">
-                    Complaint
+                    <a href="{{ route('Complaint.index') }}" class="linkNav">Complaint</a>
                 </li>
                 <li class="breadcrumb-item active txtMem" class="linkNav">Add Complaint</li>
             </ol>
@@ -24,7 +21,7 @@
         </div>
         <div class="section-group mb-4">
             <h4 set-lan="text:Basic Info">Information</h4>
-            <form id="form-add-complaint" method="POST" action="{{ route('Complaint.add') }}">
+            <form id="form-add-complaint" method="get" action="{{ route('Complaint.add') }}">
                 @csrf
                 <div class="form-row">
                     <div class="form-group col-12">
@@ -53,9 +50,9 @@
                     </div>
                     <div class="form-group col-12">
                         <div class="form-group row inputform">
-                            <label for="c_name" class="col-2 col-form-label">Attachment</label>
+                            <label for="image" class="col-2 col-form-label">Attachment</label>
                             <div class="col-5">
-                                <input type="file" name="image_complaint" id="image_complaint" class="form-control" autocomplete="off">
+                                <input type="file" name="image" id="image" class="form-control" autocomplete="off">
                                 <small class="text-muted form-text">Only images (.jpg, .jpeg, .gif, .png) and files (.pdf).</small>
                             </div>
                             <div class="text-center p-3" style="text-align: center">

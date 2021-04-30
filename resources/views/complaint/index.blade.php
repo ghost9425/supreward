@@ -8,11 +8,8 @@
     <div class="col-12">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                {{-- <li class="breadcrumb-item">
-                    <a href="{{ route('Company.index') }}" class="linkNav">Company</a>
-                </li> --}}
                 <li class="breadcrumb-item">
-                    Complaint
+                    <a href="{{ route('Complaint.index') }}" class="linkNav">Complaint</a>
                 </li>
                 <li class="breadcrumb-item active txtMem" class="linkNav">Complaint list</li>
             </ol>
@@ -90,7 +87,7 @@
         success: function(res) {
             let html = "";
             if( res.status==1 ) {
-
+                console.log(res.complaints);
                 if( res.complaints.length > 0 ) {
                     $(res.complaints).each(function(k,v) {
                         let support = "";

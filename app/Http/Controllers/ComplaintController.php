@@ -33,10 +33,15 @@ class ComplaintController extends Controller
     }
 
     public function listAjax(Request $request) {
+
         $query = Complaints::select('complaints.*', 'complaints.prefix AS c_prefix')
             ->orderBy('complaints.created_at', 'DESC');
         $complaints = $query->get();
-
+        if( count($complaints) > 0 ) {
+            foreach($complaints as $key => $complaint) {
+                $complaints[$key]->image = $complaint->image;
+            }
+        }
         // if( count($complaints) > 0 ) {
         //     foreach($complaints as $key => $complaint) {
         //         $show_image =
@@ -78,54 +83,33 @@ class ComplaintController extends Controller
 
     public function addSave(Request $request) {
 
-    //     $detaill =   $request->detaill;
+        $image_path = '';
 
+        // ติดส่วนนี้ยังแก้ไม่ได้
+        // if( $request->hasFile('image') ) {
+        //     $validate['image'] = ['mimes:jpeg,jpg,png,gif','max:3072'];
+        // }
 
-    //     $url_path_img = '';
-    //     // $domain_id = $request->session()->get('domain_id');
-    //     $query = Complaints::query();
+        // $request->validate($validate);
 
-    //     // $querydomain = Domain::query();
-    //     // $domain_prefix = $querydomain->select('domains.prefix')
-    //     // ->where('domains.id',$domain_id)
-    //     // ->first();
+        // if( $request->hasFile('image') ) {
+        //     $uuid = Str::uuid()->toString();
+        //     $imageItem = $request->file('image');
+        //     $image_new_name = $uuid . '-' . time() . '.' . strtolower($imageItem->getClientOriginalExtension());
+        //     $url_path = 'img/complaints/';
 
-    //     $complaints = $query->select('complaints.*')
-    //     ->where('complaints.detaill',$detaill)
-    //     ->first();
+        //     $img = Image::make($imageItem->path());
+        //     $img->resize(300, 300, function ($constraint) {
+        //         $constraint->aspectRatio();
+        //     })->save(public_path('/'.$url_path.$image_new_name));
+        //     $image_path = $url_path.$image_new_name;
+        // }
 
-    // //    $prefix_name =  $domain_prefix->prefix;
-
-    //     if( !empty($complaints) ) {
-    //         if( $request->hasFile('image_complaint') ) {
-    //             $uuid = Str::uuid()->toString();
-    //             $image_complaints = $request->file('image_complaint');
-    //             $image_new_name = $uuid . '-' . time() . '.' . strtolower($image_complaints->getClientOriginalExtension());
-    //             $url_path = 'img/complaints/';
-
-    //             $img = Image::make($image_complaints->path());
-    //             $img->resize(550, 550, function ($constraint) {
-    //                 $constraint->aspectRatio();
-    //             })->save(public_path('/'.$url_path.$image_new_name));
-    //             $url_path_img = $url_path.$image_new_name;
-    //         }
-
-    //         $complaints = new Complaints;
-    //         $complaints->name = $request->name;
-    //         $complaints->prefix = $request->prefix;
-    //         $complaints->detaill = $request->detaill;
-    //         $complaints->image = $url_path_img;
-    //         $complaints->save();
-
-    //         return response()->json([
-    //             'status' => '1',
-    //             'mgs' => 'Add Complaints Success'
-    //         ]);
-    //     }
         $complaints = new Complaints;
         $complaints->name = $request->name;
         $complaints->prefix = $request->prefix;
         $complaints->detaill = $request->detaill;
+        $complaints->image = $image_path;
         $complaints->save();
 
         return response()->json([

@@ -18,8 +18,8 @@ class CreateComplaintsTable extends Migration
             $table->string('name', 255);
             $table->string('prefix');
             $table->string('detaill');
-            // $table->string('image', 255);
-            $table->binary('image')->nullable(); 
+            $table->string('image', 255);
+            // $table->binary('image')->nullable();
             $table->timestamps();
         });
     }

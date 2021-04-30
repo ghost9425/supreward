@@ -40,6 +40,8 @@ class ComplaintController extends Controller
         if( count($complaints) > 0 ) {
             foreach($complaints as $key => $complaint) {
                 $complaints[$key]->image = $complaint->image;
+                $complaints[$key]->show_image = "<img src='img/complaints/" . $complaint->image . "' width='50'>";
+                $complaints[$key]->updated = date('d/m/Y H:i', strtotime($complaint->updated_at) );
             }
         }
         // if( count($complaints) > 0 ) {
@@ -81,35 +83,49 @@ class ComplaintController extends Controller
         ]);
     }
 
+    public function edit(Request $request) {
+        if( empty($request->id) ) {
+            abort(404);
+        }
+
+        $complaints = Complaints::find($request->id);
+        // $user = User::find($request->id);
+        // $permissions = Permission::orderBy('id','ASC')->limit(3)->get();
+
+        return view('complaint.edit', [
+            'layout_page' => 'complaint',
+            // 'auth' => $auth,
+            'complaints' => $complaints
+            // 'permissions' => $permissions
+        ]);
+
+    }
+
     public function addSave(Request $request) {
-
-        $image_path = '';
-
-        // ติดส่วนนี้ยังแก้ไม่ได้
-        // if( $request->hasFile('image') ) {
-        //     $validate['image'] = ['mimes:jpeg,jpg,png,gif','max:3072'];
-        // }
-
-        // $request->validate($validate);
-
-        // if( $request->hasFile('image') ) {
-        //     $uuid = Str::uuid()->toString();
-        //     $imageItem = $request->file('image');
-        //     $image_new_name = $uuid . '-' . time() . '.' . strtolower($imageItem->getClientOriginalExtension());
-        //     $url_path = 'img/complaints/';
-
-        //     $img = Image::make($imageItem->path());
-        //     $img->resize(300, 300, function ($constraint) {
-        //         $constraint->aspectRatio();
-        //     })->save(public_path('/'.$url_path.$image_new_name));
-        //     $image_path = $url_path.$image_new_name;
-        // }
 
         $complaints = new Complaints;
         $complaints->name = $request->name;
         $complaints->prefix = $request->prefix;
         $complaints->detaill = $request->detaill;
-        $complaints->image = $image_path;
+        // $complaints->image = $image_path;
+
+        if( $request->hasFile('image') ) {
+            $validate['image'] = ['mimes:jpeg,jpg,png,gif','max:3072'];
+        }
+
+        $request->validate($validate);
+
+        if( $request->hasFile('image') ) {
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $extension;
+            $file->move('img/complaints/',$filename);
+            $complaints->image = $filename;
+        } else {
+            return $request;
+            $complaints->image = '';
+        }
+
         $complaints->save();
 
         return response()->json([
@@ -117,4 +133,36 @@ class ComplaintController extends Controller
             'mgs' => 'Add Complaints Success'
         ]);
     }
+
+    public function editSave(Request $request) {
+
+        // $complaints = Complaints::find($request->id);
+        // $complaints->prefix = $request->prefix;
+
+        // if( $request->hasFile('image') ) {
+        //     $validate['image'] = ['mimes:jpeg,jpg,png,gif','max:3072'];
+        // }
+
+        // $request->validate($validate);
+
+        // if( $request->hasFile('image') ) {
+        //     $file = $request->file('image');
+        //     $extension = $file->getClientOriginalExtension();
+        //     $filename = time() . '.' . $extension;
+        //     $file->move('img/complaints/',$filename);
+        //     $complaints->image = $filename;
+        // } else {
+        //     return $request;
+        //     $complaints->image = '';
+        // }
+            // dd($complaints);
+        // $complaints->save();
+
+        // return response()->json([
+        //     'status' => '1',
+        //     'mgs' => 'Edit Complaint Success'
+        // ]);
+    }
+
+
 }

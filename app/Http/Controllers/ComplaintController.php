@@ -44,21 +44,6 @@ class ComplaintController extends Controller
                 $complaints[$key]->updated = date('d/m/Y H:i', strtotime($complaint->updated_at) );
             }
         }
-        // if( count($complaints) > 0 ) {
-        //     foreach($complaints as $key => $complaint) {
-        //         $show_image =
-
-        //         "<a href = '".get_path_no_image()."' width='100%' data-toggle='lightbox' data-title='".$complaint->name."'>
-        //         <img src='".get_path_no_image()."' width='50'></a>";
-        //         // "<img src='".get_path_no_image()."' width='50' data-toggle='lightbox'>";
-        //         if( !empty($complaint->image) ) {
-        //             $show_image =
-        //             "<a class ='Mitr' href ='".asset($complaint->image)."' width='100%' data-toggle='lightbox' data-title='".$complaint->name."'>
-        //             <img class ='Mitr' src='".asset($complaint->image)."' width='50'></a>";
-        //         }
-        //         $complaints[$key]->show_image = "<div class='text-center'>".$show_image."</div>";
-        //     }
-        // }
 
         return response()->json([
             'status'=>1,
@@ -89,14 +74,10 @@ class ComplaintController extends Controller
         }
 
         $complaints = Complaints::find($request->id);
-        // $user = User::find($request->id);
-        // $permissions = Permission::orderBy('id','ASC')->limit(3)->get();
 
         return view('complaint.edit', [
             'layout_page' => 'complaint',
-            // 'auth' => $auth,
             'complaints' => $complaints
-            // 'permissions' => $permissions
         ]);
 
     }
@@ -136,32 +117,33 @@ class ComplaintController extends Controller
 
     public function editSave(Request $request) {
 
-        // $complaints = Complaints::find($request->id);
-        // $complaints->prefix = $request->prefix;
+        $complaints = Complaints::find($request->id);
+        $complaints->detaill = $request->detaill;
 
-        // if( $request->hasFile('image') ) {
-        //     $validate['image'] = ['mimes:jpeg,jpg,png,gif','max:3072'];
-        // }
+        if( $request->hasFile('image') ) {
+            $validate['image'] = ['mimes:jpeg,jpg,png,gif','max:3072'];
+        }
 
-        // $request->validate($validate);
+        $request->validate($validate);
 
-        // if( $request->hasFile('image') ) {
-        //     $file = $request->file('image');
-        //     $extension = $file->getClientOriginalExtension();
-        //     $filename = time() . '.' . $extension;
-        //     $file->move('img/complaints/',$filename);
-        //     $complaints->image = $filename;
-        // } else {
-        //     return $request;
-        //     $complaints->image = '';
-        // }
-            // dd($complaints);
-        // $complaints->save();
+        if( $request->hasFile('image') ) {
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $extension;
+            $file->move('img/complaints/',$filename);
+            $complaints->image = $filename;
+        } else {
+            return $request;
+            $complaints->image = '';
+        }
 
-        // return response()->json([
-        //     'status' => '1',
-        //     'mgs' => 'Edit Complaint Success'
-        // ]);
+
+        $complaints->save();
+
+        return response()->json([
+            'status' => '1',
+            'mgs' => 'Edit Complaint Success'
+        ]);
     }
 
 

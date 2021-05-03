@@ -21,8 +21,9 @@
         </div>
         <div class="section-group mb-4">
             <h4 set-lan="text:Basic Info">Information</h4>
-            <form id="form-edit-complaint" method="get" action="{{ route('Complaint.edit') }}">
+            <form id="form-edit-complaint" action="{{ route('Complaint.editSave') }}" method="post">
                 @csrf
+                <input id="id" name="id" value="{{ $complaints->id }}" type="hidden" >
                 <div class="form-row">
                     <div class="form-group col-12">
                         <div class="form-group row inputform">
@@ -56,7 +57,6 @@
                                 <small class="text-muted form-text">Only images (.jpg, .jpeg, .gif, .png) and files (.pdf).</small>
                             </div>
                             <div class="text-center p-3" style="text-align: center">
-                                {{-- <img id="edit_show_image" src="{{get_path_no_image()}}" /> --}}
                             </div>
                          </div>
                     </div>
@@ -75,7 +75,14 @@
 
 @section('js')
 <script>
-$( "#form-edit-complaint" ).on('submit', function(e) {
+    $( document ).ready(function() {
+        $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+        });
+    });
+$("#form-edit-complaint").on('submit', function(e) {
     e.preventDefault();
 
     let detaill = $("#detaill").val().trim();

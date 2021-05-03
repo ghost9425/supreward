@@ -12,4 +12,9 @@ class Complaints extends Model
      * @var string
      */
     protected $table = 'complaints';
+
+    protected $fillable = ['namde',
+                            'prefix',
+                            'detaill',
+                            'image'];
 }

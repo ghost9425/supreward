@@ -115,13 +115,7 @@ table.table .btn.btn-yellow {
     <script type="text/javascript" src="{{ asset('js/series-label.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/exporting.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/export-data.js') }}"></script>
-    <script>
-        $.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});
-    </script>
+    <script type="text/javascript" src="{{ asset('js/ekko-lightbox.js') }}"></script>
     @yield('js')
 </body>
 </html>

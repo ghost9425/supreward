@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use App\Models\Complaints;
-// use Image;
+use Storage;
 
 class ComplaintController extends Controller
 {
@@ -40,7 +40,11 @@ class ComplaintController extends Controller
         if( count($complaints) > 0 ) {
             foreach($complaints as $key => $complaint) {
                 $complaints[$key]->image = $complaint->image;
-                $complaints[$key]->show_image = "<img src='img/complaints/" . $complaint->image . "' width='50'>";
+
+                $complaints[$key]->show_image =
+                "<a class ='Mitr' href ='img/complaints/".$complaint->image."' width='100%' data-toggle='lightbox'>
+                    <img src='img/complaints/" . $complaint->image . "' width='50'";
+
                 $complaints[$key]->updated = date('d/m/Y H:i', strtotime($complaint->updated_at) );
             }
         }
@@ -100,7 +104,7 @@ class ComplaintController extends Controller
             $file = $request->file('image');
             $extension = $file->getClientOriginalExtension();
             $filename = time() . '.' . $extension;
-            $file->move('img/complaints/',$filename);
+            $file->move(public_path('img/complaints/'),$filename);
             $complaints->image = $filename;
         } else {
             return $request;
@@ -130,8 +134,12 @@ class ComplaintController extends Controller
             $file = $request->file('image');
             $extension = $file->getClientOriginalExtension();
             $filename = time() . '.' . $extension;
-            $file->move('img/complaints/',$filename);
+            $file->move(public_path('img/complaints/'),$filename);
+            $oldfilename = $complaints->image;
+
             $complaints->image = $filename;
+
+            Storage::delete($oldfilename);
         } else {
             return $request;
             $complaints->image = '';

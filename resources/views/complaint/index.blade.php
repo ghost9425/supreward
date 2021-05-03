@@ -128,6 +128,13 @@ $("#tb-body-complaint").on("click", ".btn-edit", function(){
         },
     });
     }
+
+$("#tb-body-complaint").on('click', '[data-toggle="lightbox"]', function(event) {
+    event.preventDefault();
+    $(this).ekkoLightbox({
+        alwaysShowClose: true
+    });
+});
 </script>
 @endsection
 

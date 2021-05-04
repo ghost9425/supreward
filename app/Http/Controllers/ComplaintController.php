@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use App\Models\Complaints;
+use phpDocumentor\Reflection\DocBlock\Tag;
 use Storage;
 
 class ComplaintController extends Controller
@@ -55,6 +56,16 @@ class ComplaintController extends Controller
         ]);
     }
 
+    public function ajaxDelete(Request $request) {
+        $complaints = Complaints::where('id', $request->id);
+
+        $complaints->delete();
+        return response()->json([
+            'status'=>1,
+            'mgs' => 'Delete Complaints Success'
+        ]);
+
+    }
     // public function ajaxGet(Request $request) {
 
     //     $complaints = Complaints::find($request->id);

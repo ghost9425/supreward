@@ -5,6 +5,7 @@
 
 @section('content')
 <div class="row">
+    @csrf
     <div class="col-12">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -65,8 +66,71 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="modaldelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold ml-5" set-lan="text:Mission">Delete Record?</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body mx-3">
+                <div class="row">
+                    <label for="user" class="col-12 col-form-label text-center" set-lan="html:Username-">Are you sure you want to delete the selected rows?<label style="color: red;">&nbsp;*</label></label>
+                </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button id="btn-change-delete" type="button" class="btn btn-yellow font-weight-bold waves-effect waves-light">OK</button>
+                <button type="button" class="btn btn-yellow font-weight-bold waves-effect waves-light" data-dismiss="modal" aria-label="Close">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 @section('js')
+<script>
+$("#tb-body-complaint").on("click", "#btn-modal-delete", function(){
+    $("#modaldelete").modal("show");
+    let id = $(this).data("id");
+    $( "#modaldelete" ).on( "click", "#btn-change-delete", function() {
+        $.ajax({
+            url: "{{route('Complaint.ajaxDelete')}}",
+            dataType: "json",
+            type: "POST",
+            data: {
+                _token: "{{ csrf_token() }}",
+                id: id,
+            },
+            cache: false,
+            beforeSend: function() {
+                $('#myModalLoad').modal('show');
+            },
+            success: function(res) {
+                $('#myModalLoad').modal('hide');
+                if( res.status == 1 ) {
+                    $("#lbAlert").html(res.mgs);
+                    $('#modalAlert').modal('show');
+                    setTimeout(function(){ window.location.href = "{{route('Complaint.index')}}" }, 1000);
+                } else {
+                    if( res.mgs ) {
+                        $("#lbAlert").html(res.mgs);
+                    } else {
+                        $("#lbAlert").html('Error Delete Complaints Save');
+                    }
+                    $('#modalAlert').modal('show');
+                }
+            },
+            error: function (xhr, status, error) {
+                $('#myModalLoad').modal('hide');
+                $("#lbAlert").html('Error Delete Complaints Save');
+                $('#modalAlert').modal('show');
+            },
+        });
+    });
+});
+</script>
 <script>
     $( document ).ready(function() {
         listAjax();
@@ -109,7 +173,7 @@ $("#tb-body-complaint").on("click", ".btn-edit", function(){
                                         '<td style="text-align:center;">'+ v.show_image +'</td>'+
                                         '<td id="date_change" class="text-center text-nowrap align-middle">'+ v.updated +'</td>'+
                                         '<td class="text-center align-middle">'+
-                                            '<a data-id="'+v.id+'" class="link btn-edit"><i class="fas fa-pencil-alt"></i></a>'+
+                                            '<a data-id="'+v.id+'" class="link btn-edit"><i class="fas fa-pencil-alt"></i></a> <button data-id="'+v.id+'" id="btn-modal-delete" class="btn btn-sm btn-danger btn_delete_item col-xl-auto col-sm-12 mt-1">delete</button>'+
                                         '</td>'+
                                     '</tr>';
                         console.log(v.updated_at)

@@ -133,6 +133,8 @@ $( "#form-add-complaint" ).on('submit', function(e) {
         },
         error: function (xhr, status, error) {
             $('#myModalLoad').modal('hide');
+            $("#lbAlert").html('Error Add Complaints Save');
+            $('#modalAlert').modal('show');
         },
     });
 });

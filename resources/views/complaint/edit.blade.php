@@ -111,14 +111,14 @@ $("#form-edit-complaint").on('submit', function(e) {
                 if( res.mgs ) {
                     $("#lbAlert").html(res.mgs);
                 } else {
-                    $("#lbAlert").html('Error Addssss User Save');
+                    $("#lbAlert").html('Error Edit Complaint Save');
                 }
                 $('#modalAlert').modal('show');
             }
         },
         error: function (xhr, status, error) {
             $('#myModalLoad').modal('hide');
-            $("#lbAlert").html('Error Add User Save');
+            $("#lbAlert").html('Error Edit Complaint Save');
             $('#modalAlert').modal('show');
         },
     });

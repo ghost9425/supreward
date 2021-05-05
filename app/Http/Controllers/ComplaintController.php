@@ -105,9 +105,9 @@ class ComplaintController extends Controller
         $complaints->detaill = $request->detaill;
         // $complaints->image = $image_path;
 
-        if( $request->hasFile('image') ) {
-            $validate['image'] = ['mimes:jpeg,jpg,png,gif','max:3072'];
-        }
+        // if( $request->hasFile('image') ) {
+        $validate['image'] = ['mimes:jpeg,jpg,png,gif','max:3072'];
+        // }
 
         $request->validate($validate);
 
@@ -118,7 +118,7 @@ class ComplaintController extends Controller
             $file->move(public_path('img/complaints/'),$filename);
             $complaints->image = $filename;
         } else {
-            return $request;
+            // return $request;
             $complaints->image = '';
         }
 
@@ -135,9 +135,9 @@ class ComplaintController extends Controller
         $complaints = Complaints::find($request->id);
         $complaints->detaill = $request->detaill;
 
-        if( $request->hasFile('image') ) {
+        // if( $request->hasFile('image') ) {
             $validate['image'] = ['mimes:jpeg,jpg,png,gif','max:3072'];
-        }
+        // }
 
         $request->validate($validate);
 
@@ -151,10 +151,11 @@ class ComplaintController extends Controller
             $complaints->image = $filename;
 
             Storage::delete($oldfilename);
-        } else {
-            return $request;
-            $complaints->image = '';
         }
+        // else {
+        //     return $request;
+        //     $complaints->image = '';
+        // }
 
 
         $complaints->save();

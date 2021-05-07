@@ -36,17 +36,22 @@ class ComplaintController extends Controller
     public function listAjax(Request $request) {
 
         $query = Complaints::select('complaints.*', 'complaints.prefix AS c_prefix')
-            ->orderBy('complaints.created_at', 'DESC');
+            ->orderBy('complaints.updated_at', 'DESC');
         $complaints = $query->get();
         if( count($complaints) > 0 ) {
             foreach($complaints as $key => $complaint) {
                 $complaints[$key]->image = $complaint->image;
-
+                if($complaints[$key]->image == '') {
+                    $complaints[$key]->show_image =
+                    "<a class ='Mitr' href ='img/no-image-available.png' width='100%' data-toggle='lightbox'>
+                    <img src='img/no-image-available.png' width='50'";
+                } else {
                 $complaints[$key]->show_image =
-                "<a class ='Mitr' href ='img/complaints/".$complaint->image."' width='100%' data-toggle='lightbox'>
-                    <img src='img/complaints/" . $complaint->image . "' width='50'";
+                    "<a class ='Mitr' href ='img/complaints/".$complaint->image."' width='100%' data-toggle='lightbox'>
+                        <img src='img/complaints/" . $complaint->image . "' width='50'";
+                }
 
-                $complaints[$key]->updated = date('d/m/Y H:i', strtotime($complaint->updated_at) );
+                $complaints[$key]->updated = date('d-m-Y H:i', strtotime($complaint->updated_at) );
             }
         }
 
@@ -59,7 +64,10 @@ class ComplaintController extends Controller
     public function ajaxDelete(Request $request) {
         $complaints = Complaints::where('id', $request->id)->first();
 
-        if (!empty($complaints)) {
+        if ($complaints->image === '') {
+            $complaints->delete();
+        }
+        else if (!empty($complaints)) {
             $path = public_path('img/complaints/') . $complaints->image;
             if (file_exists($path)) {
                 unlink($path);
@@ -74,15 +82,6 @@ class ComplaintController extends Controller
         ]);
 
     }
-    // public function ajaxGet(Request $request) {
-
-    //     $complaints = Complaints::find($request->id);
-    //     if( !empty($complaints->image) ) {
-    //         $complaints->show_images = asset($complaints->image);
-    //     }
-
-    //     return response($complaints);
-    // }
 
     public function add(Request $request) {
 
@@ -111,7 +110,8 @@ class ComplaintController extends Controller
         $complaints->name = $request->name;
         $complaints->prefix = $request->prefix;
         $complaints->detaill = $request->detaill;
-        // $complaints->image = $image_path;
+        // $null_path = 'no-image-available.png';
+        // $default_image = public_path('img/').$null_path;
 
         // if( $request->hasFile('image') ) {
         $validate['image'] = ['mimes:jpeg,jpg,png,gif','max:3072'];

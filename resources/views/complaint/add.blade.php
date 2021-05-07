@@ -126,7 +126,7 @@ $( "#form-add-complaint" ).on('submit', function(e) {
                 if( res.mgs ) {
                     $("#lbAlert").html(res.mgs);
                 } else {
-                    $("#lbAlert").html('Error Add Complaints Save');
+                    $("#lbAlert").html('Add Complaints Save Error');
                 }
                 $('#modalAlert').modal('show');
             }

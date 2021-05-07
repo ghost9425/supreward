@@ -117,7 +117,7 @@ $("#tb-body-complaint").on("click", "#btn-modal-delete", function(){
                     if( res.mgs ) {
                         $("#lbAlert").html(res.mgs);
                     } else {
-                        $("#lbAlert").html('Error Delete Complaints Save');
+                        $("#lbAlert").html('Delete Complaints Save Error');
                     }
                     $('#modalAlert').modal('show');
                 }

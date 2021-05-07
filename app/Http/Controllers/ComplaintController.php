@@ -57,7 +57,15 @@ class ComplaintController extends Controller
     }
 
     public function ajaxDelete(Request $request) {
-        $complaints = Complaints::where('id', $request->id);
+        $complaints = Complaints::where('id', $request->id)->first();
+
+        if (!empty($complaints)) {
+            $path = public_path('img/complaints/') . $complaints->image;
+            if (file_exists($path)) {
+                unlink($path);
+            }
+            $complaints->delete();
+        }
 
         $complaints->delete();
         return response()->json([

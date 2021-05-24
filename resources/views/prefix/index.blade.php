@@ -10,15 +10,15 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a href="{{ route('Complaint.index') }}" class="linkNav">Complaint</a>
+                    <a href="{{ route('Prefix.index') }}" class="linkNav">Prefix</a>
                 </li>
-                <li class="breadcrumb-item active txtMem" class="linkNav">Complaint list</li>
+                <li class="breadcrumb-item active txtMem" class="linkNav">Prefix list</li>
             </ol>
         </nav>
     </div>
     <div class="col-12">
         <div class="title-holder">
-            <h1>Complaint list</h1>
+            <h1>Prefix list</h1>
         </div>
     </div>
     <div class="col-12">
@@ -36,24 +36,18 @@
         <div class="table-wrapper">
             <div class="row m-0">
                 <div class="col-sm-12 p-0">
-                    <table class="table table-border" id="table_complaint" role="grid">
+                    <table class="table table-border" id="table_prefix" role="grid">
                         <thead class="rgba-green-slight">
                             <tr role="row">
                                 <th style="width: 4%">No</th>
-                                <th style="width: 10%;text-align: center;padding-left: 5px;">Name</th>
                                 <th style="width: 10%;text-align: center;padding-left: 5px;">Prefix</th>
-                                <th style="width: 40%;">Detaill</th>
-                                <th style="width: 15%;">image</th>
-                                <th>Last Complaint date</th>
+                                <th>Prefix Created</th>
                                 <th style="width: 7%">Edit</th>
                             </tr>
                         </thead>
-                        <tbody id="tb-body-complaint"></tbody>
+                        <tbody id="tb-body-prefix"></tbody>
                         <tfoot class="rgba-yellow-slight">
                             <tr class="total">
-                                <td></td>
-                                <td></td>
-                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td class="overflow ellipsis"></td>
@@ -90,7 +84,7 @@
 </div>
 @endsection
 @section('js')
-<script>
+{{-- <script>
 $("#tb-body-complaint").on("click", "#btn-modal-delete", function(){
     $("#modaldelete").modal("show");
     let id = $(this).data("id");
@@ -130,16 +124,16 @@ $("#tb-body-complaint").on("click", "#btn-modal-delete", function(){
         });
     });
 });
-</script>
+</script> --}}
 <script>
     $( document ).ready(function() {
         listAjax();
     });
 
-$("#tb-body-complaint").on("click", ".btn-edit", function(){
+$("#tb-body-prefix").on("click", ".btn-edit", function(){
     $('#myModalLoad').modal('show');
     let id = $(this).data("id");
-    let url = "{{ route('Complaint.edit') }}/"+id;
+    let url = "{{ route('Prefix.edit') }}/"+id;
     window.location.href = url;
 });
 $("#btn-search").on("click", function(){
@@ -148,7 +142,7 @@ $("#btn-search").on("click", function(){
 
     function listAjax() {
     let search = $("#search").val();
-    let url = "{{ route('Complaint.listAjax') }}";
+    let url = "{{ route('Prefix.listAjax') }}";
 
     $.ajax({
         url: url,
@@ -164,9 +158,9 @@ $("#btn-search").on("click", function(){
         success: function(res) {
             let html = "";
             if( res.status==1 ) {
-                console.log(res.complaints);
-                if( res.complaints.length > 0 ) {
-                    $(res.complaints).each(function(k,v) {
+                console.log(res.prefixs);
+                if( res.prefixs.length > 0 ) {
+                    $(res.prefixs).each(function(k,v) {
                         let support = "";
                         if( v.support ) {
                             support = v.support;
@@ -174,12 +168,10 @@ $("#btn-search").on("click", function(){
                         html    +=  '<tr role="row" style="vertical-align: middle;">'+
                                         '<td class="text-center align-middle">'+ (k+1) +'</td>'+
                                         '<td class="align-middle text-center">'+ v.name +'</td>'+
-                                        '<td class="align-middle text-center">'+ v.prefix +'</td>'+
-                                        '<td class="text-center align-middle">'+ v.detaill +'</td>'+
-                                        '<td style="text-align:center;">'+ v.show_image +'</td>'+
-                                        '<td id="date_change" class="text-center text-nowrap align-middle">'+ v.updated +'</td>'+
+                                        '<td id="date_change" class="text-center text-nowrap align-middle">'+ v.created +'</td>'+
                                         '<td class="text-center align-middle">'+
-                                            '<a data-id="'+v.id+'" class="link btn-edit"><i class="fas fa-pencil-alt"></i></a> <button data-id="'+v.id+'" id="btn-modal-delete" class="btn btn-sm btn-danger btn_delete_item col-xl-auto col-sm-12 mt-1">delete</button>'+
+                                            // '<a data-id="'+v.id+'" class="link btn-edit"><i class="fas fa-pencil-alt"></i></a> <button data-id="'+v.id+'" id="btn-modal-delete" class="btn btn-sm btn-danger btn_delete_item col-xl-auto col-sm-12 mt-1">delete</button>'+
+                                            '<a data-id="'+v.id+'" class="link btn-edit"><i class="fas fa-pencil-alt"></i></a>'+
                                         '</td>'+
                                     '</tr>';
                         console.log(v.updated_at)
@@ -189,7 +181,7 @@ $("#btn-search").on("click", function(){
                 }
 
             }
-            $("#tb-body-complaint").html(html);
+            $("#tb-body-prefix").html(html);
             $('#myModalLoad').modal('hide');
         },
         error: function (xhr, status, error) {
@@ -199,12 +191,6 @@ $("#btn-search").on("click", function(){
     });
     }
 
-$("#tb-body-complaint").on('click', '[data-toggle="lightbox"]', function(event) {
-    event.preventDefault();
-    $(this).ekkoLightbox({
-        alwaysShowClose: true
-    });
-});
 </script>
 @endsection
 

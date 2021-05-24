@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 // use App\Http\Controllers\InstallController;
 // use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ComplaintController;
+use App\Http\Controllers\PrefixController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,4 +27,9 @@ Route::post('/complaint/edit-save', [ComplaintController::class, 'editSave'])->n
 Route::post('complaint/ajax-delete', [ComplaintController::class, 'ajaxDelete'])->name('Complaint.ajaxDelete');
 Route::get('/complaint/list-ajax', [ComplaintController::class, 'listAjax'])->name('Complaint.listAjax');
 
-
+Route::get('/prefix', [PrefixController::class, 'index'])->name('Prefix.index');
+Route::get('/prefix/add', [PrefixController::class, 'add'])->name('Prefix.add');
+Route::post('/prefix/add-save', [PrefixController::class, 'addSave'])->name('Prefix.addSave');
+Route::get('/prefix/edit/{id?}', [PrefixController::class, 'edit'])->name('Prefix.edit');
+Route::post('/prefix/edit-save', [PrefixController::class, 'editSave'])->name('Prefix.editSave');
+Route::get('/prefix/list-ajax', [PrefixController::class, 'listAjax'])->name('Prefix.listAjax');

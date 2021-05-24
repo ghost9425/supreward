@@ -95,45 +95,36 @@
                                     </a>
                                 </li>
                                 <li id="menuCompany">
-                                    {{-- <a href="{{ route('Complaint.index') }}" class="waves-effect"> --}}
                                         <a href="{{ route('Complaint.index') }}" class="waves-effect">
                                         <span class="sv-normal submain" set-lan="text:Add Member">Complaint list</span>
                                     </a>
                                 </li>
-
-                                {{-- <li id="menuCompany"><a href="{{ route('Company.product') }}" class="waves-effect">
-                                    <span class="sv-normal submain" set-lan="text:Add Member">Product List</span></a>
-                                </li> --}}
-
                             </ul>
                         </div>
                     </li>
-                    {{-- <li id="menuUser" class="menuMain">
-                        <a class="collapsible-header waves-effect arrow-r {{ ($layout_page=='user')?'active':'' }}">
-                            <i class="sv-slim-icon fas fa-member"></i>
-                            <label set-lan="text:Management" class="main">User</label>
+                    <li id="menuCompany" class="menuMain">
+                        <a class="collapsible-header waves-effect arrow-r {{ ($layout_page=='prefix')?'active':'' }}">
+                            <i class="sv-slim-icon fas fa-payment fa-angle-double-left"></i>
+                            <label set-lan="text:Company" class="main">Prefix</label>
                             <i class="fas fa-angle-down rotate-icon"></i>
                         </a>
                         <div class="collapsible-body">
                             <ul>
-                                <li id="menuShareholderAdd"><a href="{{ route('User.add') }}" class="waves-effect">
-                                    <span class="sv-normal submain" id="AddItem" set-lan="text:Add Shareholder">Add User</span></a>
+                                <li id="menuCompanyAdd">
+                                    <a href="{{ route('Prefix.add') }}" class="waves-effect">
+                                    {{-- <a href="#" class="waves-effect"> --}}
+                                        <span class="sv-normal submain" id="AddItem" set-lan="text:Add Company">Add Prefix</span>
+                                    </a>
                                 </li>
-                                <li id="menuMemberAdd"><a href="{{ route('User.index') }}" class="waves-effect">
-                                    <span class="sv-normal submain" set-lan="text:Add Member">User List</span></a>
+                                <li id="menuCompany">
+                                        <a href="{{ route('Prefix.index') }}" class="waves-effect">
+                                        {{-- <a href="#" class="waves-effect"> --}}
+                                        <span class="sv-normal submain" set-lan="text:Add Member">Prefix list</span>
+                                    </a>
                                 </li>
                             </ul>
                         </div>
-                    </li> --}}
-
-                    {{-- @if( in_array($layoutUser->permission_id, [1]) )
-                    <li id="menuDashboard" class="menuMain">
-                        <a href="{{ route('ImportCsv.index') }}" class="collapsible-header waves-effect {{ ($layout_page=='import_csv')?'active':'' }}"><i class="sv-slim-icon fas fa-dashboard"></i>
-                            <label class="main">Import CSV</label>
-                        </a>
                     </li>
-                    @endif --}}
-
                     <li>
                         <a id="toggle" class="waves-effect">
                             <!-- <span set-lan="text:Online" style="color: #fff; float: left;" id="txtOnline">Online :</span> -->

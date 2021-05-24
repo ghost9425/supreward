@@ -16,11 +16,13 @@ class CreateComplaintsTable extends Migration
         Schema::create('complaints', function (Blueprint $table) {
             $table->id();
             $table->string('name', 255);
+            // $table->unsignedBigInteger('prefix_id');
             $table->string('prefix');
             $table->string('detaill');
             $table->string('image', 255);
             // $table->binary('image')->nullable();
             $table->timestamps();
+            // $table->foreign('prefix_id')->references('id')->on('prefix');
         });
     }
 

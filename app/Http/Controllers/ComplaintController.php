@@ -26,18 +26,43 @@ class ComplaintController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->search;
+        $query = Complaints::select('complaints.*');
+
+        if( !empty($search) ) {
+            $query->where( function($q) use ($search) {
+                $q->where('complaints.name', 'LIKE', '%'.$search.'%')
+                    ->orWhere('complaints.prefix', 'LIKE', '%'.$search.'%');
+            });
+        }
+
+        $complaint = $query->get();
+
         return view('complaint.index', [
-            'layout_page' => 'company'
+            'layout_page' => 'complaint',
+            'complaint' => $complaint,
+            'search' => $search
         ]);
+
     }
 
     public function listAjax(Request $request) {
 
+        $search = $request->search;
+
         $query = Complaints::select('complaints.*', 'complaints.prefix AS c_prefix')
             ->orderBy('complaints.updated_at', 'DESC');
+        if( !empty($search) ) {
+            $query->where( function($q) use ($search) {
+                $q->where('complaints.name', 'LIKE', '%'.$search.'%')
+                ->orWhere('complaints.prefix', 'LIKE', '%'.$search.'%');
+            });
+        }
+
         $complaints = $query->get();
+
         if( count($complaints) > 0 ) {
             foreach($complaints as $key => $complaint) {
                 $complaints[$key]->image = $complaint->image;

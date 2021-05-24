@@ -22,9 +22,9 @@
         </div>
     </div>
     <div class="col-12">
-        {{-- <div class="btn-toolbar section-group pb-0 mb-3" role="toolbar">
+        <div class="btn-toolbar section-group pb-0 mb-3" role="toolbar">
             <div class="form-group row" style="padding-left: 1rem;">
-                <label class="col-form-label">Username :</label>
+                <label class="col-form-label">Prefix :</label>
                 <div style="padding-left: 1rem;">
                     <input type="text" class="form-control" id="search" name="search" value="">
                 </div>
@@ -32,7 +32,7 @@
             <div class="form-group row" style="padding-left: 2rem;">
                 <button class="btn btn-yellow font-weight-bold m-0 px-3 py-2 z-depth-0 waves-effect btnMenu" type="button" id="btn-search">Search</button>
             </div>
-        </div> --}}
+        </div>
         <div class="table-wrapper">
             <div class="row m-0">
                 <div class="col-sm-12 p-0">
@@ -142,15 +142,21 @@ $("#tb-body-complaint").on("click", ".btn-edit", function(){
     let url = "{{ route('Complaint.edit') }}/"+id;
     window.location.href = url;
 });
+$("#btn-search").on("click", function(){
+    listAjax();
+});
 
     function listAjax() {
-    // let search = $("#search").val();
+    let search = $("#search").val();
     let url = "{{ route('Complaint.listAjax') }}";
 
     $.ajax({
         url: url,
         type: "GET",
         cache: false,
+        data: {
+            search: search,
+        },
         dataType: "json",
         beforeSend: function() {
             $('#myModalLoad').modal('show');

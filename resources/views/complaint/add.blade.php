@@ -36,7 +36,16 @@
                         <div class="form-group row inputform">
                             <label for="prefix" class="col-2 col-form-label" set-lan="html:Username-">PREFIX<label style="color: red;">&nbsp;*</label></label>
                             <div class="col-4">
-                                <input type="text" id="prefix" name="prefix" class="form-control" autocomplete="off" onkeypress="clsAlphaNoOnly(event)" maxlength="30">
+                                <div class="select-outline">
+                                    <select class="mdb-select initialized" id="prefix" name="prefix">
+                                        <option value="">Select PREFIX</option>
+                                        @if( count($prefixs) > 0 )
+                                            @foreach( $prefixs as $prefix )
+                                            <option value="{{ $prefix->id }}">{{ $prefix->name }}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -91,7 +100,7 @@ $( "#form-add-complaint" ).on('submit', function(e) {
     }
 
     if(!prefix) {
-        alert = "Please enter 'PREFIX'";
+        alert = "Please SELECT 'PREFIX'";
         $("#lbAlert").html(alert);
         $('#modalAlert').modal('show');
         return false;

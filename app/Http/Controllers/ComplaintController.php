@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use App\Models\Complaints;
+use App\Models\Prefix;
 use phpDocumentor\Reflection\DocBlock\Tag;
 use Storage;
 
@@ -52,7 +53,8 @@ class ComplaintController extends Controller
 
         $search = $request->search;
 
-        $query = Complaints::select('complaints.*', 'complaints.prefix AS c_prefix')
+        $query = Complaints::select('complaints.*', 'prefix.name AS prefix_name')
+            ->join('prefix', 'prefix.id', 'complaints.prefix_id')
             ->orderBy('complaints.updated_at', 'DESC');
         if( !empty($search) ) {
             $query->where( function($q) use ($search) {
@@ -77,6 +79,7 @@ class ComplaintController extends Controller
                 }
 
                 $complaints[$key]->updated = date('d-m-Y H:i', strtotime($complaint->updated_at) );
+                // $complaints[$key]->prefix =
             }
         }
 
@@ -110,8 +113,10 @@ class ComplaintController extends Controller
 
     public function add(Request $request) {
 
+        $prefixs = Prefix::orderBy('id','ASC')->get();
         return view('complaint.add', [
-            'layout_page' => 'complaint'
+            'layout_page' => 'complaint',
+            'prefixs' => $prefixs
         ]);
     }
 
@@ -133,7 +138,7 @@ class ComplaintController extends Controller
 
         $complaints = new Complaints;
         $complaints->name = $request->name;
-        $complaints->prefix = $request->prefix;
+        $complaints->prefix_id = $request->prefix;
         $complaints->detaill = $request->detaill;
         // $null_path = 'no-image-available.png';
         // $default_image = public_path('img/').$null_path;

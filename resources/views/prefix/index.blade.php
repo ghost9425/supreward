@@ -167,7 +167,7 @@ $("#btn-search").on("click", function(){
                         }
                         html    +=  '<tr role="row" style="vertical-align: middle;">'+
                                         '<td class="text-center align-middle">'+ (k+1) +'</td>'+
-                                        '<td class="align-middle text-center">'+ v.name +'</td>'+
+                                        '<td class="align-middle text-center text-uppercase">'+ v.name +'</td>'+
                                         '<td id="date_change" class="text-center text-nowrap align-middle">'+ v.created +'</td>'+
                                         '<td class="text-center align-middle">'+
                                             // '<a data-id="'+v.id+'" class="link btn-edit"><i class="fas fa-pencil-alt"></i></a> <button data-id="'+v.id+'" id="btn-modal-delete" class="btn btn-sm btn-danger btn_delete_item col-xl-auto col-sm-12 mt-1">delete</button>'+

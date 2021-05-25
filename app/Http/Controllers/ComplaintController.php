@@ -79,7 +79,7 @@ class ComplaintController extends Controller
                 }
 
                 $complaints[$key]->updated = date('d-m-Y H:i', strtotime($complaint->updated_at) );
-                // $complaints[$key]->prefix =
+
             }
         }
 

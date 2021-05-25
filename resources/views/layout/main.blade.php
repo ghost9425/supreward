@@ -25,6 +25,9 @@
 table.table .btn.btn-yellow {
     white-space: nowrap;
 }
+.dropdown-content li {
+    text-transform: uppercase;
+}
 </style>
 @yield('css')
 @php

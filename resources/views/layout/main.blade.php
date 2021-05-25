@@ -6,7 +6,7 @@
     <meta charset="utf-8" /><meta name="viewport" content="width=1480" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>PTGACC</title>
+    <title>REWARD</title>
     <link rel="icon" href="{{asset("img/logo.png")}}"/>
     <link rel="stylesheet" href={{ asset('https://use.fontawesome.com/releases/v5.8.2/css/all.css')}} />
     <!-- Bootstrap core CSS -->
@@ -27,6 +27,9 @@ table.table .btn.btn-yellow {
 }
 </style>
 @yield('css')
+@php
+$layoutUser = auth()->user();
+@endphp
 <body class="fixed-sn">
     <div id="myModalLoad" class="modal" data-backdrop="static" data-keyboard="false" style="z-index: 9999">
         <div class="d-flex justify-content-center" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #008F6B !important;">
@@ -52,6 +55,14 @@ table.table .btn.btn-yellow {
                 </a>
                 <div class="navbar-panel-box">
                     <div class="navbar-panel d-flex justify-content-between">
+                        <div class="d-flex align-items-center nav-top" style="margin-left: 10px;">
+                            <b>Support-reward</b>
+                        </div>
+                        <div class="d-flex align-items-center nav-top-links">
+                            <div class="d-flex align-items-center nav-top" style="margin-left: 10px;">
+                                <a class="nav-link" set-lan="html:Log Out" href="{{route('Auth.logoutSave')}}"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+                            </div>
+                        </div>
                     </div>
                     <div class="simple-marquee-container">
                         <marquee class="marqueetxt" style="color: #fff; padding-top: 3px;"></marquee>

@@ -107,7 +107,7 @@ class PrefixController extends Controller
     public function addSave(Request $request) {
 
         $prefix = new Prefix;
-        $prefix->name = $request->name;
+        $prefix->name = strtoupper($request->name);
 
         $validate['name'] = ['required', 'string', 'min:2'];
 
@@ -124,7 +124,7 @@ class PrefixController extends Controller
     public function editSave(Request $request) {
 
         $prefix = Prefix::find($request->id);
-        $prefix->name = $request->name;
+        $prefix->name = strtoupper($request->name);
 
         $validate['name'] = ['required', 'string', 'min:2'];
 

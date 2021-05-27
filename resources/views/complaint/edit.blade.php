@@ -37,8 +37,7 @@
                         <div class="form-group row inputform">
                             <label for="prefix" class="col-2 col-form-label" set-lan="html:Username-">PREFIX<label style="color: red;">&nbsp;*</label></label>
                             <div class="col-4">
-                                <input type="text" id="prefix" name="prefix" value="{{ $complaints->prefix_id }}" class="form-control" autocomplete="off" onkeypress="clsAlphaNoOnly(event)" maxlength="30" disabled="disabled">
-                                {{-- <input type="text" id="prefix" name="prefix" value="{{ $prefix->prefix_name }}" class="form-control" autocomplete="off" onkeypress="clsAlphaNoOnly(event)" maxlength="30" disabled="disabled"> --}}
+                                <input type="text" id="prefix" name="prefix" value="{{ $complaints->prefix_name }}" class="form-control" autocomplete="off" onkeypress="clsAlphaNoOnly(event)" maxlength="30" disabled="disabled">
                             </div>
                         </div>
                     </div>
@@ -55,7 +54,7 @@
                             <label for="image" class="col-2 col-form-label">Attachment</label>
                             <div class="col-5">
                                 <input type="file" name="image" id="image" class="form-control" autocomplete="off">
-                                <small class="text-muted form-text">Only images (.jpg, .jpeg, .gif, .png) and files (.pdf).</small>
+                                <small class="text-muted form-text">Only images (.jpg, .jpeg, .gif, .png)</small>
                             </div>
                             <div class="text-center p-3" style="text-align: center">
                             </div>

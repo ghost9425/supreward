@@ -62,7 +62,7 @@
                             <label for="image" class="col-2 col-form-label">Attachment</label>
                             <div class="col-5">
                                 <input type="file" name="image" id="image" class="form-control" autocomplete="off">
-                                <small class="text-muted form-text">Only images (.jpg, .jpeg, .gif, .png) and files (.pdf).</small>
+                                <small class="text-muted form-text">Only images (.jpg, .jpeg, .gif, .png)</small>
                             </div>
                             <div class="text-center p-3" style="text-align: center">
                                 {{-- <img id="edit_show_image" src="{{get_path_no_image()}}" /> --}}

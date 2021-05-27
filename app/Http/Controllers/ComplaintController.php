@@ -125,7 +125,13 @@ class ComplaintController extends Controller
             abort(404);
         }
 
-        $complaints = Complaints::find($request->id);
+        $complaints = Complaints::select('complaints.*', 'prefix.name AS prefix_name')
+            ->join('prefix', function($join) {
+                $join->on('prefix.id', 'complaints.prefix_id');
+            })
+            ->where( 'complaints.id', $request->id )
+            ->first();;
+        // dd($complaints);
 
         return view('complaint.edit', [
             'layout_page' => 'complaint',

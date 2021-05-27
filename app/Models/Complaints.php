@@ -13,8 +13,8 @@ class Complaints extends Model
      */
     protected $table = 'complaints';
 
-    protected $fillable = ['namde',
-                            'prefix',
+    protected $fillable = ['name',
                             'detaill',
-                            'image'];
+                            'image',
+                            'prefix_id'];
 }

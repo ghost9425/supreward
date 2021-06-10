@@ -44,6 +44,7 @@
                                 <th style="width: 6%;text-align: center;padding-left: 5px;">Prefix</th>
                                 <th style="width: 40%;">Detaill</th>
                                 <th style="width: 15%;">image</th>
+                                {{-- <th>Status</th> --}}
                                 <th>Last Complaint date</th>
                                 <th style="width: 10%">Edit</th>
                             </tr>
@@ -51,6 +52,7 @@
                         <tbody id="tb-body-complaint"></tbody>
                         <tfoot class="rgba-yellow-slight">
                             <tr class="total">
+                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>

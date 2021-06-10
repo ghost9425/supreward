@@ -7,6 +7,7 @@ use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\PrefixController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\CommonProblemController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -43,4 +44,11 @@ Route::group( [ 'middleware' => ['auth'] ], function () {
     Route::get('/prefix/edit/{id?}', [PrefixController::class, 'edit'])->name('Prefix.edit');
     Route::post('/prefix/edit-save', [PrefixController::class, 'editSave'])->name('Prefix.editSave');
     Route::get('/prefix/list-ajax', [PrefixController::class, 'listAjax'])->name('Prefix.listAjax');
+
+    Route::get('/commonproblem', [CommonProblemController::class, 'index'])->name('CommonProblem.index');
+    Route::get('/commonproblem/add', [CommonProblemController::class, 'add'])->name('CommonProblem.add');
+    Route::post('/commonproblem/add-save', [CommonProblemController::class, 'addSave'])->name('CommonProblem.addSave');
+    Route::get('/commonproblem/edit/{id?}', [CommonProblemController::class, 'edit'])->name('CommonProblem.edit');
+    Route::post('/commonproblem/edit-save', [CommonProblemController::class, 'editSave'])->name('CommonProblem.editSave');
+    Route::get('/commonproblem/list-ajax', [CommonProblemController::class, 'listAjax'])->name('CommonProblem.listAjax');
 });

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use App\Models\Complaints;
 use App\Models\Prefix;
+use App\Models\ComplaintsPrefixCollection;
 use phpDocumentor\Reflection\DocBlock\Tag;
 use Storage;
 
@@ -56,6 +57,7 @@ class ComplaintController extends Controller
 
         $query = Complaints::select('complaints.*', 'prefix.name AS prefix_name')
             ->join('prefix', 'prefix.id', 'complaints.prefix_id')
+            ->join('complants_prefix_collection', 'complants_prefix_collection.complants_id', 'complaints.id')
             ->orderBy('complaints.updated_at', 'DESC');
         if( !empty($search) ) {
             $query->where( function($q) use ($search) {
@@ -147,6 +149,7 @@ class ComplaintController extends Controller
         $complaints->name = $request->name;
         $complaints->prefix_id = $request->prefix;
         $complaints->detaill = $request->detaill;
+        // dd($request);
         // $null_path = 'no-image-available.png';
         // $default_image = public_path('img/').$null_path;
 
@@ -168,7 +171,13 @@ class ComplaintController extends Controller
         }
 
         $complaints->save();
-
+        // dd($complaints);
+        $complaintsPrefixCollection = new ComplaintsPrefixCollection;
+        $complaintsPrefixCollection->complants_id = $complaints->id;
+        $complaintsPrefixCollection->prefix_id = $complaints->prefix_id;
+        $complaintsPrefixCollection->complaints_success = '0';
+        $complaintsPrefixCollection->save();
+        // dd(prefix);
         return response()->json([
             'status' => '1',
             'mgs' => 'Add Complaints Success'

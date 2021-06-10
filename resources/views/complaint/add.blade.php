@@ -28,7 +28,7 @@
                         <div class="form-group row inputform">
                             <label for="name" class="col-2 col-form-label" set-lan="html:Username-">Complainant's name<label style="color: red;">&nbsp;*</label></label>
                             <div class="col-4">
-                                <input type="text" id="name" name="name" class="form-control" autocomplete="off" onkeypress="clsAlphaNoOnly(event)" maxlength="30">
+                                <input type="text" id="name" name="name" class="form-control" autocomplete="off" maxlength="30">
                             </div>
                         </div>
                     </div>
@@ -38,12 +38,35 @@
                             <div class="col-4">
                                 <div class="select-outline">
                                     <select class="mdb-select initialized" id="prefix" name="prefix" searchable="Search here.." style='text-transform:uppercase'>
-                                        {{-- <option value="" disabled selected>Select PREFIX</option> --}}
+                                        <option value="" disabled selected>Select PREFIX</option>
                                         @if( count($prefixs) > 0 )
                                             @foreach( $prefixs as $prefix )
                                             <option value="{{ $prefix->id }}">{{ $prefix->name }}</option>
                                             @endforeach
                                         @endif
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-12">
+                        <div class="form-group row inputform">
+                            <label for="prefix" class="col-2 col-form-label" set-lan="html:Username-">COMMON PROBLEM<label style="color: red;">&nbsp;*</label></label>
+                            <div class="col-4">
+                                <div class="select-outline">
+                                    <select class="mdb-select initialized" id="prefix" name="prefix" searchable="Search here.." style='text-transform:uppercase'>
+                                        <option value="" disabled selected>Enter Problem</option>
+                                        <option value="พ้อยท์หาย">พ้อยท์หาย</option>
+                                        <option value="พ้อยไม่อัพเดท">พ้อยไม่อัพเดท</option>
+                                        <option value="เติมเงินมีปัญหา">เติมเงินมีปัญหา</option>
+                                        <option value="แลกเครดิตไม่เข้า">แลกเครดิตไม่เข้า</option>
+                                        <option value="พ้อยท์เกิน,แลกเยอะผิดปกติ">พ้อยท์เกิน,แลกเยอะผิดปกติ</option>
+                                        <option value="อื่น ๆ" selected="selected">อื่น ๆ</option>
+                                        {{-- @if( count($prefixs) > 0 )
+                                            @foreach( $prefixs as $prefix )
+                                            <option value="{{ $prefix->id }}">{{ $prefix->name }}</option>
+                                            @endforeach
+                                        @endif --}}
                                     </select>
                                 </div>
                             </div>
@@ -85,7 +108,9 @@
 
 @section('js')
 <script>
-
+$(document).on( 'change', 'select', function () {
+    $("#detaill").val($(this).val());
+});
 // $(document).ready(function() {
 //     $('.mdb-select').materialSelect();
 // });
@@ -146,9 +171,10 @@ $( "#form-add-complaint" ).on('submit', function(e) {
             }
         },
         error: function (xhr, status, error) {
-            $('#myModalLoad').modal('hide');
-            $("#lbAlert").html('Error Add Complaints Save');
-            $('#modalAlert').modal('show');
+            console.log(xhr, status, error);
+            // $('#myModalLoad').modal('hide');
+            // $("#lbAlert").html('Error Add Complaints Save');
+            // $('#modalAlert').modal('show');
         },
     });
 });

@@ -30,17 +30,18 @@ class ComplaintController extends Controller
     public function index(Request $request)
     {
         $search = $request->search;
-        $query = Complaints::select('complaints.*');
+        $query = Complaints::select('complaints.*', 'prefix.name AS prefix_name')
+            ->leftjoin('prefix', 'prefix.id', 'complaints.prefix_id');
 
         if( !empty($search) ) {
             $query->where( function($q) use ($search) {
                 $q->where('complaints.name', 'LIKE', '%'.$search.'%')
-                    ->orWhere('complaints.prefix', 'LIKE', '%'.$search.'%');
+                    ->orWhere('prefix.name', 'LIKE', '%'.$search.'%');
             });
         }
 
         $complaint = $query->get();
-
+        // dd($complaint);
         return view('complaint.index', [
             'layout_page' => 'complaint',
             'complaint' => $complaint,
@@ -59,7 +60,7 @@ class ComplaintController extends Controller
         if( !empty($search) ) {
             $query->where( function($q) use ($search) {
                 $q->where('complaints.name', 'LIKE', '%'.$search.'%')
-                ->orWhere('complaints.prefix', 'LIKE', '%'.$search.'%');
+                ->orWhere('prefix.name', 'LIKE', '%'.$search.'%');
             });
         }
 

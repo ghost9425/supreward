@@ -41,11 +41,11 @@
                             <tr role="row">
                                 <th style="width: 4%">No</th>
                                 <th style="width: 10%;text-align: center;padding-left: 5px;">Name</th>
-                                <th style="width: 10%;text-align: center;padding-left: 5px;">Prefix</th>
+                                <th style="width: 6%;text-align: center;padding-left: 5px;">Prefix</th>
                                 <th style="width: 40%;">Detaill</th>
                                 <th style="width: 15%;">image</th>
                                 <th>Last Complaint date</th>
-                                <th style="width: 7%">Edit</th>
+                                <th style="width: 10%">Edit</th>
                             </tr>
                         </thead>
                         <tbody id="tb-body-complaint"></tbody>
@@ -179,7 +179,7 @@ $("#btn-search").on("click", function(){
                                         '<td style="text-align:center;">'+ v.show_image +'</td>'+
                                         '<td id="date_change" class="text-center text-nowrap align-middle">'+ v.updated +'</td>'+
                                         '<td class="text-center align-middle">'+
-                                            '<a data-id="'+v.id+'" class="link btn-edit"><i class="fas fa-pencil-alt"></i></a> <button data-id="'+v.id+'" id="btn-modal-delete" class="btn btn-sm btn-danger btn_delete_item col-xl-auto col-sm-12 mt-1">delete</button>'+
+                                            '<a data-id="'+v.id+'" class="link btn-edit"><i class="fas fa-pencil-alt"></i></a> <button data-id="'+v.id+'" id="btn-modal-delete" class="btn btn-sm btn-danger btn_delete_item col-xl-auto col-sm-12 mt-1" style="padding:.25rem .6rem">delete</button>'+
                                         '</td>'+
                                     '</tr>';
                         console.log(v.updated_at)

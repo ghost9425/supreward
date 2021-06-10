@@ -28,6 +28,9 @@ table.table .btn.btn-yellow {
 .dropdown-content li {
     text-transform: uppercase;
 }
+.select-wrapper .search-wrap .md-form input {
+        text-transform:uppercase
+    }
 </style>
 @yield('css')
 @php

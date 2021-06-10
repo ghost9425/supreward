@@ -45,7 +45,8 @@
                         <div class="form-group row inputform">
                             <label for="detaill" class="col-2 col-form-label" set-lan="html:Username-">Complaint detail<label style="color: red;">&nbsp;*</label></label>
                             <div class="col-10">
-                                <input type="text" id="detaill" name="detaill" value="{{ $complaints->detaill }}" class="form-control" autocomplete="off" maxlength="255">
+                                {{-- <input type="text" id="detaill" name="detaill" value="{{ $complaints->detaill }}" class="form-control" autocomplete="off" maxlength="255"> --}}
+                                <textarea class="form-control rounded-0" id="detaill" name="detaill" value="{{ $complaints->detaill }}" rows="7" style="resize: none;">{{ $complaints->detaill }}</textarea>
                             </div>
                         </div>
                     </div>

@@ -37,8 +37,8 @@
                             <label for="prefix" class="col-2 col-form-label" set-lan="html:Username-">PREFIX<label style="color: red;">&nbsp;*</label></label>
                             <div class="col-4">
                                 <div class="select-outline">
-                                    <select class="mdb-select initialized" id="prefix" name="prefix">
-                                        <option value="">Select PREFIX</option>
+                                    <select class="mdb-select initialized" id="prefix" name="prefix" searchable="Search here.." style='text-transform:uppercase'>
+                                        {{-- <option value="" disabled selected>Select PREFIX</option> --}}
                                         @if( count($prefixs) > 0 )
                                             @foreach( $prefixs as $prefix )
                                             <option value="{{ $prefix->id }}">{{ $prefix->name }}</option>
@@ -52,8 +52,9 @@
                     <div class="form-group col-12">
                         <div class="form-group row inputform">
                             <label for="detaill" class="col-2 col-form-label" set-lan="html:Username-">Complaint detail<label style="color: red;">&nbsp;*</label></label>
-                            <div class="col-10">
-                                <input type="text" id="detaill" name="detaill" class="form-control" autocomplete="off" maxlength="255">
+                            <div class="col-6">
+                                {{-- <input type="text" id="detaill" name="detaill" class="form-control" autocomplete="off" maxlength="255"> --}}
+                                <textarea class="form-control rounded-0" id="detaill" name="detaill" rows="7" style="resize: none;"></textarea>
                             </div>
                         </div>
                     </div>
@@ -84,6 +85,10 @@
 
 @section('js')
 <script>
+
+// $(document).ready(function() {
+//     $('.mdb-select').materialSelect();
+// });
 $( "#form-add-complaint" ).on('submit', function(e) {
     e.preventDefault();
 

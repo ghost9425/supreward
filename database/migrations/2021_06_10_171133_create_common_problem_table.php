@@ -15,7 +15,7 @@ class CreateCommonProblemTable extends Migration
     {
         Schema::create('common_problem', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('problem');
             $table->timestamps();
         });
     }

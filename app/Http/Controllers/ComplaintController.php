@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use App\Models\Complaints;
 use App\Models\Prefix;
 use App\Models\ComplaintsPrefixCollection;
+use App\Models\CommonProblem;
 use phpDocumentor\Reflection\DocBlock\Tag;
 use Storage;
 
@@ -117,9 +118,12 @@ class ComplaintController extends Controller
     public function add(Request $request) {
 
         $prefixs = Prefix::orderBy('id','ASC')->get();
+        $problems = CommonProblem::orderBy('id','ASC')->get();
+
         return view('complaint.add', [
             'layout_page' => 'complaint',
-            'prefixs' => $prefixs
+            'prefixs' => $prefixs,
+            'problems' => $problems
         ]);
     }
 
@@ -133,7 +137,7 @@ class ComplaintController extends Controller
                 $join->on('prefix.id', 'complaints.prefix_id');
             })
             ->where( 'complaints.id', $request->id )
-            ->first();;
+            ->first();
         // dd($complaints);
 
         return view('complaint.edit', [
@@ -187,7 +191,7 @@ class ComplaintController extends Controller
     public function editSave(Request $request) {
 
         $complaints = Complaints::find($request->id);
-        $complaints->detaill = $request->detaill;
+        $complaints->problem = $request->problem;
 
         // if( $request->hasFile('image') ) {
             $validate['image'] = ['mimes:jpeg,jpg,png,gif','max:3072'];

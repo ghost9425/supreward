@@ -4,6 +4,7 @@
 @endsection
 
 @section('content')
+{{-- @dd($detailproblem) --}}
 <div class="row">
     <div class="col-12">
         <nav aria-label="breadcrumb">
@@ -54,19 +55,13 @@
                             <label for="prefix" class="col-2 col-form-label" set-lan="html:Username-">COMMON PROBLEM<label style="color: red;">&nbsp;*</label></label>
                             <div class="col-4">
                                 <div class="select-outline">
-                                    <select class="mdb-select initialized" id="prefix" name="prefix" searchable="Search here.." style='text-transform:uppercase'>
+                                    <select class="mdb-select initialized" id="problem" name="problem" searchable="Search here..">
                                         <option value="" disabled selected>Enter Problem</option>
-                                        <option value="พ้อยท์หาย">พ้อยท์หาย</option>
-                                        <option value="พ้อยไม่อัพเดท">พ้อยไม่อัพเดท</option>
-                                        <option value="เติมเงินมีปัญหา">เติมเงินมีปัญหา</option>
-                                        <option value="แลกเครดิตไม่เข้า">แลกเครดิตไม่เข้า</option>
-                                        <option value="พ้อยท์เกิน,แลกเยอะผิดปกติ">พ้อยท์เกิน,แลกเยอะผิดปกติ</option>
-                                        <option value="อื่น ๆ" selected="selected">อื่น ๆ</option>
-                                        {{-- @if( count($prefixs) > 0 )
-                                            @foreach( $prefixs as $prefix )
-                                            <option value="{{ $prefix->id }}">{{ $prefix->name }}</option>
+                                        @if( count($problems) > 0 )
+                                            @foreach( $problems as $problem )
+                                            <option value="{{ $problem->name }}">{{ $problem->name }}</option>
                                             @endforeach
-                                        @endif --}}
+                                        @endif
                                     </select>
                                 </div>
                             </div>
@@ -77,7 +72,9 @@
                             <label for="detaill" class="col-2 col-form-label" set-lan="html:Username-">Complaint detail<label style="color: red;">&nbsp;*</label></label>
                             <div class="col-6">
                                 {{-- <input type="text" id="detaill" name="detaill" class="form-control" autocomplete="off" maxlength="255"> --}}
-                                <textarea class="form-control rounded-0" id="detaill" name="detaill" rows="7" style="resize: none;"></textarea>
+                                <textarea class="form-control rounded-0" id="detaill" name="detaill" rows="7" style="resize: none;">
+
+                                </textarea>
                             </div>
                         </div>
                     </div>
@@ -108,12 +105,12 @@
 
 @section('js')
 <script>
-$(document).on( 'change', 'select', function () {
+
+$(document).on( 'change', 'select#problem', function () {
     $("#detaill").val($(this).val());
+
 });
-// $(document).ready(function() {
-//     $('.mdb-select').materialSelect();
-// });
+
 $( "#form-add-complaint" ).on('submit', function(e) {
     e.preventDefault();
 

@@ -13,11 +13,12 @@ class UpdateComplaintsTable extends Migration
      */
     public function up()
     {
-        Schema::table('complaints', function (Blueprint $table) {
-            $table->unsignedBigInteger('common_id')->after('prefix_id');
+        // Schema::table('complaints', function (Blueprint $table) {
+        //     $table->unsignedBigInteger('common_id')->after('prefix_id');
 
-            $table->foreign('common_id')->references('id')->on('common_problem');
-        });
+        //     $table->foreign('common_id')->references('id')->on('common_problem');
+        // });
+        //
     }
 
     /**

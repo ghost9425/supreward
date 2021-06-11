@@ -125,6 +125,29 @@
                             </ul>
                         </div>
                     </li>
+                    <li id="menuCompany" class="menuMain">
+                        <a class="collapsible-header waves-effect arrow-r {{ ($layout_page=='commonproblem')?'active':'' }}">
+                            <i class="sv-slim-icon fas fa-payment fa-angle-double-left"></i>
+                            <label set-lan="text:Company" class="main">Problem</label>
+                            <i class="fas fa-angle-down rotate-icon"></i>
+                        </a>
+                        <div class="collapsible-body">
+                            <ul>
+                                <li id="menuCompanyAdd">
+                                    <a href="{{ route('CommonProblem.add') }}" class="waves-effect">
+                                    {{-- <a href="#" class="waves-effect"> --}}
+                                        <span class="sv-normal submain" id="AddItem" set-lan="text:Add Company">Add Problem</span>
+                                    </a>
+                                </li>
+                                <li id="menuCompany">
+                                        <a href="{{ route('CommonProblem.index') }}" class="waves-effect">
+                                        {{-- <a href="#" class="waves-effect"> --}}
+                                        <span class="sv-normal submain" set-lan="text:Add Member">Problem list</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
                     <li>
                         <a id="toggle" class="waves-effect">
                             <!-- <span set-lan="text:Online" style="color: #fff; float: left;" id="txtOnline">Online :</span> -->

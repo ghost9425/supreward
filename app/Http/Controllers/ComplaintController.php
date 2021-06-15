@@ -42,6 +42,7 @@ class ComplaintController extends Controller
             });
         }
 
+
         $complaint = $query->get();
         // dd($complaint);
         return view('complaint.index', [
@@ -66,7 +67,6 @@ class ComplaintController extends Controller
                 ->orWhere('prefix.name', 'LIKE', '%'.$search.'%');
             });
         }
-
         $complaints = $query->get();
 
         if( count($complaints) > 0 ) {
@@ -152,7 +152,7 @@ class ComplaintController extends Controller
         $complaints = new Complaints;
         $complaints->name = $request->name;
         $complaints->prefix_id = $request->prefix;
-        $complaints->detaill = $request->detaill;
+        $complaints->detail = $request->detail;
         // dd($request);
         // $null_path = 'no-image-available.png';
         // $default_image = public_path('img/').$null_path;

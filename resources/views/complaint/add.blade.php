@@ -4,7 +4,7 @@
 @endsection
 
 @section('content')
-{{-- @dd($detailproblem) --}}
+{{-- @dd($problems) --}}
 <div class="row">
     <div class="col-12">
         <nav aria-label="breadcrumb">
@@ -59,7 +59,7 @@
                                         <option value="" disabled selected>Enter Problem</option>
                                         @if( count($problems) > 0 )
                                             @foreach( $problems as $problem )
-                                            <option value="{{ $problem->name }}">{{ $problem->name }}</option>
+                                            <option value="{{ $problem->problem }}">{{ $problem->problem }}</option>
                                             @endforeach
                                         @endif
                                     </select>
@@ -72,7 +72,7 @@
                             <label for="detaill" class="col-2 col-form-label" set-lan="html:Username-">Complaint detail<label style="color: red;">&nbsp;*</label></label>
                             <div class="col-6">
                                 {{-- <input type="text" id="detaill" name="detaill" class="form-control" autocomplete="off" maxlength="255"> --}}
-                                <textarea class="form-control rounded-0" id="detaill" name="detaill" rows="7" style="resize: none;">
+                                <textarea class="form-control rounded-0" id="detail" name="detail" rows="7" style="resize: none;">
 
                                 </textarea>
                             </div>
@@ -107,8 +107,7 @@
 <script>
 
 $(document).on( 'change', 'select#problem', function () {
-    $("#detaill").val($(this).val());
-
+    $("#detail").val($(this).val());
 });
 
 $( "#form-add-complaint" ).on('submit', function(e) {
@@ -116,7 +115,7 @@ $( "#form-add-complaint" ).on('submit', function(e) {
 
     let name = $("#name").val().trim();
     let prefix = $("#prefix").val().trim();
-    let detaill = $("#detaill").val().trim();
+    let detail = $("#detail").val().trim();
     let alert = "";
 
     if(!name) {
@@ -133,7 +132,7 @@ $( "#form-add-complaint" ).on('submit', function(e) {
         return false;
     }
 
-    if(!detaill) {
+    if(!detail) {
         alert = "Please enter 'Complaint detail'";
         $("#lbAlert").html(alert);
         $('#modalAlert').modal('show');
@@ -168,10 +167,10 @@ $( "#form-add-complaint" ).on('submit', function(e) {
             }
         },
         error: function (xhr, status, error) {
-            console.log(xhr, status, error);
-            // $('#myModalLoad').modal('hide');
-            // $("#lbAlert").html('Error Add Complaints Save');
-            // $('#modalAlert').modal('show');
+            // console.log(xhr, status, error);
+            $('#myModalLoad').modal('hide');
+            $("#lbAlert").html('Error Add Complaints Save');
+            $('#modalAlert').modal('show');
         },
     });
 });

@@ -177,7 +177,7 @@ $("#btn-search").on("click", function(){
                                         '<td class="text-center align-middle">'+ (k+1) +'</td>'+
                                         '<td class="align-middle text-center">'+ v.name +'</td>'+
                                         '<td class="align-middle text-center text-uppercase">'+ v.prefix_name +'</td>'+
-                                        '<td class="text-center align-middle">'+ v.detaill +'</td>'+
+                                        '<td class="text-center align-middle">'+ v.detail +'</td>'+
                                         '<td style="text-align:center;">'+ v.show_image +'</td>'+
                                         '<td id="date_change" class="text-center text-nowrap align-middle">'+ v.updated +'</td>'+
                                         '<td class="text-center align-middle">'+

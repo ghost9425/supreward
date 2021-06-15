@@ -148,6 +148,22 @@
                             </ul>
                         </div>
                     </li>
+                    <li id="menuCompany" class="menuMain">
+                        <a class="collapsible-header waves-effect arrow-r {{ ($layout_page=='report')?'active':'' }}">
+                            <i class="sv-slim-icon fas fa-payment fa-angle-double-left"></i>
+                            <label set-lan="text:Company" class="main">Report</label>
+                            <i class="fas fa-angle-down rotate-icon"></i>
+                        </a>
+                        <div class="collapsible-body">
+                            <ul>
+                                <li id="menuCompany">
+                                        <a href="{{ route('Report.index') }}" class="waves-effect">
+                                        <span class="sv-normal submain">Report status</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
                     <li>
                         <a id="toggle" class="waves-effect">
                             <!-- <span set-lan="text:Online" style="color: #fff; float: left;" id="txtOnline">Online :</span> -->

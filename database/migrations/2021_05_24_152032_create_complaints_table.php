@@ -17,7 +17,7 @@ class CreateComplaintsTable extends Migration
             $table->id();
             $table->string('name', 255);
             // $table->string('prefix');
-            $table->string('detaill');
+            $table->string('detail');
             $table->string('image', 255);
             // $table->binary('image')->nullable();
             $table->unsignedBigInteger('prefix_id');

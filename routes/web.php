@@ -8,6 +8,7 @@ use App\Http\Controllers\PrefixController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\CommonProblemController;
+use App\Http\Controllers\ReportController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -51,4 +52,7 @@ Route::group( [ 'middleware' => ['auth'] ], function () {
     Route::get('/commonproblem/edit/{id?}', [CommonProblemController::class, 'edit'])->name('CommonProblem.edit');
     Route::post('/commonproblem/edit-save', [CommonProblemController::class, 'editSave'])->name('CommonProblem.editSave');
     Route::get('/commonproblem/list-ajax', [CommonProblemController::class, 'listAjax'])->name('CommonProblem.listAjax');
+
+    Route::get('/report', [ReportController::class, 'index'])->name('Report.index');
+    Route::get('/report/list-ajax', [ReportController::class, 'listAjax'])->name('Report.listAjax');
 });

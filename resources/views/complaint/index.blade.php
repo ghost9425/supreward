@@ -44,7 +44,7 @@
                                 <th style="width: 6%;text-align: center;padding-left: 5px;">Prefix</th>
                                 <th style="width: 40%;">Detaill</th>
                                 <th style="width: 15%;">image</th>
-                                {{-- <th>Status</th> --}}
+                                <th style="width: 10%;">Status</th>
                                 <th>Last Complaint date</th>
                                 <th style="width: 10%">Edit</th>
                             </tr>
@@ -52,6 +52,7 @@
                         <tbody id="tb-body-complaint"></tbody>
                         <tfoot class="rgba-yellow-slight">
                             <tr class="total">
+                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -173,18 +174,36 @@ $("#btn-search").on("click", function(){
                         if( v.support ) {
                             support = v.support;
                         }
-                        html    +=  '<tr role="row" style="vertical-align: middle;">'+
+                        // html    +=  '<tr role="row" style="vertical-align: middle;">'+
+                        //                 '<td class="text-center align-middle">'+ (k+1) +'</td>'+
+                        //                 '<td class="align-middle text-center">'+ v.name +'</td>'+
+                        //                 '<td class="align-middle text-center text-uppercase">'+ v.prefix_name +'</td>'+
+                        //                 '<td class="text-center align-middle">'+ v.detail +'</td>'+
+                        //                 '<td style="text-align:center;">'+ v.show_image +'</td>'+
+                        //                 '<td class="align-middle text-center" style="text-align:center;">'+ v.complaints_status +'</td>'+
+                        //                 // (v.complaints_status = 1 ? '':'<td class="align-middle text-center" style="text-align:center;">'+ v.complaints_status +'</td>')+
+                        //                 '<td id="date_change" class="text-center text-nowrap align-middle">'+ v.updated +'</td>'+
+                        //                 '<td class="text-center align-middle">'+
+                        //                     '<a data-id="'+v.id+'" class="link btn-edit"><i class="fas fa-pencil-alt"></i></a> <button data-id="'+v.id+'" id="btn-modal-delete" class="btn btn-sm btn-danger btn_delete_item col-xl-auto col-sm-12 mt-1" style="padding:.25rem .6rem">delete</button>'+
+                        //                 '</td>'+
+                        //             '</tr>';
+                        console.log(v.updated_at)
+                        if(v.complaints_status == 0){
+                            // console.log('count pending');
+                            html    +=  '<tr role="row" style="vertical-align: middle;">'+
                                         '<td class="text-center align-middle">'+ (k+1) +'</td>'+
                                         '<td class="align-middle text-center">'+ v.name +'</td>'+
                                         '<td class="align-middle text-center text-uppercase">'+ v.prefix_name +'</td>'+
                                         '<td class="text-center align-middle">'+ v.detail +'</td>'+
                                         '<td style="text-align:center;">'+ v.show_image +'</td>'+
+                                        // '<td class="align-middle text-center" style="text-align:center;">'+ v.complaints_status +'</td>'+
+                                        (v.complaints_status == 1 ? '<td class="align-middle text-center" style="text-align:center;">'+ 'Success' +'</td>':'<td class="align-middle text-center" style="text-align:center;">'+ 'Pending' +'</td>')+
                                         '<td id="date_change" class="text-center text-nowrap align-middle">'+ v.updated +'</td>'+
                                         '<td class="text-center align-middle">'+
                                             '<a data-id="'+v.id+'" class="link btn-edit"><i class="fas fa-pencil-alt"></i></a> <button data-id="'+v.id+'" id="btn-modal-delete" class="btn btn-sm btn-danger btn_delete_item col-xl-auto col-sm-12 mt-1" style="padding:.25rem .6rem">delete</button>'+
                                         '</td>'+
                                     '</tr>';
-                        console.log(v.updated_at)
+                        }
                     });
                 } else {
                     html    +=  '<tr role="row"><td class="text-center" colspan="8">No Data</td></tr>';

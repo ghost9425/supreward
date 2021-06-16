@@ -57,10 +57,11 @@ class ComplaintController extends Controller
 
         $search = $request->search;
 
-        $query = Complaints::select('complaints.*', 'prefix.name AS prefix_name')
+        $query = Complaints::select('complaints.*', 'prefix.name AS prefix_name', 'complants_prefix_collection.complaints_success AS complaints_status')
             ->join('prefix', 'prefix.id', 'complaints.prefix_id')
             ->join('complants_prefix_collection', 'complants_prefix_collection.complants_id', 'complaints.id')
-            ->orderBy('complaints.updated_at', 'DESC');
+            ->orderBy('complaints.updated_at', 'DESC')
+            ->where('complants_prefix_collection.complaints_success', 0);
         if( !empty($search) ) {
             $query->where( function($q) use ($search) {
                 $q->where('complaints.name', 'LIKE', '%'.$search.'%')
@@ -69,7 +70,7 @@ class ComplaintController extends Controller
         }
         $complaints = $query->get();
 
-        if( count($complaints) > 0 ) {
+        if( count($complaints) > 0){
             foreach($complaints as $key => $complaint) {
                 $complaints[$key]->image = $complaint->image;
                 if($complaints[$key]->image == '') {
@@ -81,11 +82,11 @@ class ComplaintController extends Controller
                     "<a class ='Mitr' href ='img/complaints/".$complaint->image."' width='100%' data-toggle='lightbox'>
                         <img src='img/complaints/" . $complaint->image . "' width='50'";
                 }
-
                 $complaints[$key]->updated = date('d-m-Y H:i', strtotime($complaint->updated_at) );
 
             }
         }
+        // dd($complaints);
 
         return response()->json([
             'status'=>1,
@@ -138,11 +139,13 @@ class ComplaintController extends Controller
             })
             ->where( 'complaints.id', $request->id )
             ->first();
+        $complaintsPrefixCollection = ComplaintsPrefixCollection::where('id', $request->id)->first();
         // dd($complaints);
 
         return view('complaint.edit', [
             'layout_page' => 'complaint',
-            'complaints' => $complaints
+            'complaints' => $complaints,
+            'complaintsPrefixCollection' => $complaintsPrefixCollection,
         ]);
 
     }
@@ -191,7 +194,7 @@ class ComplaintController extends Controller
     public function editSave(Request $request) {
 
         $complaints = Complaints::find($request->id);
-        $complaints->problem = $request->problem;
+        $complaints->detail = $request->detail;
 
         // if( $request->hasFile('image') ) {
             $validate['image'] = ['mimes:jpeg,jpg,png,gif','max:3072'];
@@ -217,10 +220,15 @@ class ComplaintController extends Controller
 
 
         $complaints->save();
+        // dd($request);
+        $complaintsPrefixCollection = ComplaintsPrefixCollection::find($request->id);
+        $complaintsPrefixCollection->complaints_success = $request->status_complaints;
+        $complaintsPrefixCollection->save();
 
         return response()->json([
             'status' => '1',
-            'mgs' => 'Edit Complaint Success'
+            'mgs' => 'Edit Complaint Success',
+            'status_complaints' => intval($request->status_complaints)
         ]);
     }
 

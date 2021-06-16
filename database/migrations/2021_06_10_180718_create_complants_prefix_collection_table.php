@@ -17,7 +17,7 @@ class CreateComplantsPrefixCollectionTable extends Migration
             $table->id();
             $table->unsignedBigInteger('complants_id');
             $table->unsignedBigInteger('prefix_id');
-            $table->string('complaints_success');
+            $table->unsignedTinyInteger('complaints_success');
             $table->timestamps();
             $table->foreign('complants_id')->references('id')->on('complaints');
             $table->foreign('prefix_id')->references('id')->on('prefix');

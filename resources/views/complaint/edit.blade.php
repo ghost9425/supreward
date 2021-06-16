@@ -46,7 +46,7 @@
                             <label for="detaill" class="col-2 col-form-label" set-lan="html:Username-">Complaint detail<label style="color: red;">&nbsp;*</label></label>
                             <div class="col-10">
                                 {{-- <input type="text" id="detaill" name="detaill" value="{{ $complaints->detaill }}" class="form-control" autocomplete="off" maxlength="255"> --}}
-                                <textarea class="form-control rounded-0" id="detaill" name="detaill" value="{{ $complaints->detaill }}" rows="7" style="resize: none;">{{ $complaints->detaill }}</textarea>
+                                <textarea class="form-control rounded-0" id="detail" name="detail" value="{{ $complaints->detail }}" rows="7" style="resize: none;">{{ $complaints->detail }}</textarea>
                             </div>
                         </div>
                     </div>
@@ -60,6 +60,21 @@
                             <div class="text-center p-3" style="text-align: center">
                             </div>
                          </div>
+                    </div>
+                    <div class="form-group col-12">
+                        <div class="form-group row inputform">
+                            <label for="prefix" class="col-2 col-form-label" set-lan="html:Username-">Status<label style="color: red;">&nbsp;*</label></label>
+                            <div class="col-4">
+                                <div class="select-outline">
+                                    <select class="mdb-select initialized" id="status_complaints" name="status_complaints">
+                                        <option value={{$complaintsPrefixCollection->complaints_success}} selected>{{($complaintsPrefixCollection->complaints_success==0)?'Pending':'Success'}} (Selected)</option>
+                                        {{-- <option value="0" disabled selected>Enter Problem</option> --}}
+                                        <option value="0" >Pending</option>
+                                        <option value="1" >Success</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -79,8 +94,10 @@
 $("#form-edit-complaint").on('submit', function(e) {
     e.preventDefault();
 
-    let detaill = $("#detaill").val().trim();
+    let detaill = $("#detail").val().trim();
     let alert = "";
+    let status_complaints = $( "#status_complaints option:selected" ).val();
+    // console.log(status_complaints);
 
     if(!detaill) {
         alert = "Please enter 'Complaint detail'";

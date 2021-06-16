@@ -10,11 +10,11 @@ class ReportController extends Controller
     public function index(Request $request)
     {
 
-        $complaints_status = ComplaintsPrefixCollection::orderBy('id','ASC')->get();
+        // $complaints_status = ComplaintsPrefixCollection::orderBy('id','ASC')->get();
 
         return view('report.index', [
-            'layout_page' => 'report',
-            'complaints_status' => $complaints_status
+            'layout_page' => 'report'
+            // 'complaints_status' => $complaints_status
         ]);
 
     }
@@ -23,9 +23,7 @@ class ReportController extends Controller
 
         $search = $request->search;
         $search2 = $request->status_complaints;
-        // $company_name = $request->company_name;
-        // $nickname = $request->nickname;
-        // dd($search);
+
         $query = ComplaintsPrefixCollection::select('complants_prefix_collection.*',
         'complaints.name AS complaints_name','complaints.detail AS complaints_detail','prefix.name AS prefix_name')
             ->join('complaints', 'complaints.id', 'complants_prefix_collection.complants_id')
@@ -39,9 +37,6 @@ class ReportController extends Controller
                 });
             }
 
-        // dd($query);
-        // $complaints_status = ComplaintsPrefixCollection::orderBy('id','ASC')->get();
-        // dd($search);
         if( ($search != '') ) {
             $query->where( function($q) use ($search) {
                 $q->where('complaints.name', 'LIKE', '%'.$search.'%')
@@ -55,21 +50,11 @@ class ReportController extends Controller
         if( count($reports) > 0 ) {
             foreach($reports as $key => $report) {
 
-                // $complaints[$key]->image = $complaint->image;
-                // if($complaints[$key]->image == '') {
-                //     $complaints[$key]->show_image =
-                //     "<a class ='Mitr' href ='img/no-image-available.png' width='100%' data-toggle='lightbox'>
-                //     <img src='img/no-image-available.png' width='50'";
-                // } else {
-                // $complaints[$key]->show_image =
-                //     "<a class ='Mitr' href ='img/complaints/".$complaint->image."' width='100%' data-toggle='lightbox'>
-                //         <img src='img/complaints/" . $complaint->image . "' width='50'";
-                // }
-                // if($reports[$key]->complaints_success == 1){
-                //     $report->complaints_success = "Success";
-                // } else {
-                //     $report->complaints_success = "Pending";
-                // }
+                if($reports[$key]->complaints_success == 1){
+                    $report->complaints_success = "Success";
+                } else {
+                    $report->complaints_success = "Pending";
+                }
                 $reports[$key]->updated = date('d-m-Y H:i', strtotime($report->updated_at) );
 
             }

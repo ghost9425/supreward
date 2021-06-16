@@ -89,10 +89,10 @@
 $( document ).ready(function() {
         listAjax();
 });
-// $(document).on( 'change', 'select#status_complaints', function () {
-//     listAjax();
-//     // alert("status");
-// });
+$(document).on( 'change', 'select#status_complaints', function () {
+    listAjax();
+    // alert("status");
+});
 var input = document.getElementById("search");
 
 input.addEventListener("keyup", function(event) {

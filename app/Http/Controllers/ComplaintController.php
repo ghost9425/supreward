@@ -94,27 +94,24 @@ class ComplaintController extends Controller
         ]);
     }
 
-    public function ajaxDelete(Request $request) {
-        $complaints = Complaints::where('id', $request->id)->first();
-
-        if ($complaints->image === '') {
-            $complaints->delete();
-        }
-        else if (!empty($complaints)) {
-            $path = public_path('img/complaints/') . $complaints->image;
-            if (file_exists($path)) {
-                unlink($path);
-            }
-            $complaints->delete();
-        }
-
-        $complaints->delete();
-        return response()->json([
-            'status'=>1,
-            'mgs' => 'Delete Complaints Success'
-        ]);
-
-    }
+// public function ajaxDelete(Request $request) {
+//         $complaints = Complaints::where('id', $request->id)->first();
+//         if ($complaints->image === '') {
+//             $complaints->delete();
+//         }
+//         else if (!empty($complaints)) {
+//             $path = public_path('img/complaints/') . $complaints->image;
+//             if (file_exists($path)) {
+//                 unlink($path);
+//             }
+//             $complaints->delete();
+//         }
+//         $complaints->delete();
+//         return response()->json([
+//             'status'=>1,
+//             'mgs' => 'Delete Complaints Success'
+//         ]);
+// }
 
     public function add(Request $request) {
 
@@ -213,11 +210,6 @@ class ComplaintController extends Controller
 
             Storage::delete($oldfilename);
         }
-        // else {
-        //     return $request;
-        //     $complaints->image = '';
-        // }
-
 
         $complaints->save();
         // dd($request);
@@ -231,6 +223,5 @@ class ComplaintController extends Controller
             'status_complaints' => intval($request->status_complaints)
         ]);
     }
-
 
 }

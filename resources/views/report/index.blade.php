@@ -4,6 +4,8 @@
 @endsection
 
 @section('content')
+<input type="hidden" class="form-control" id="startdate" value="{{ $startdate }}" />
+<input type="hidden" class="form-control" id="todate" value="{{ $todate }}" />
 <div class="row">
     @csrf
     <div class="col-12">
@@ -40,7 +42,23 @@
                         @endif --}}
                         <option value="0">Pending</option>
                         <option value="1">Success</option>
-                        <option value="2">All</option>
+                        <option value="2" selected>All</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row" style="padding-left: 2rem;">
+                <div class="select-outline">
+                    <select class="mdb-select initialized" id="sort_datetime" name="sort_datetime">
+                        <option value="" disabled>Select Datetime</option>
+                        {{-- @if( count($complaints_status) > 0 )
+                            @foreach( $complaints_status as $status )
+                            <option value="{{ $status->id }}">{{ ($status->complaints_success==0)?'Pending':'Success' }}</option>
+                            @endforeach
+                        @endif --}}
+                        <option value="0">Today</option>
+                        <option value="1">Yesterday</option>
+                        <option value="2">Last Month</option>
+                        <option value="3" selected>Anytime</option>
                     </select>
                 </div>
             </div>
@@ -93,6 +111,39 @@ $(document).on( 'change', 'select#status_complaints', function () {
     listAjax();
     // alert("status");
 });
+
+$(document).on("change", 'select#sort_datetime', function() {
+        let btn = $(this).val();
+        if (btn == 0) {
+            // $("#date_action").val("today");
+            // $("#date_previous_next").val("");
+            alert(btn);
+        } else if (btn == 1) {
+            // $("#date_action").val("yesterday");
+            // $("#date_previous_next").val("");
+            alert(btn);
+        } else if (btn == 2) {
+            // $("#date_action").val("this_week");
+            // $("#date_previous_next").val("");
+            alert(btn);
+        } else if (btn == 'last_week') {
+            // $("#date_action").val("last_week");
+            // $("#date_previous_next").val("");
+        } else if (btn == 'this_month') {
+            // $("#date_action").val("this_month");
+            // $("#date_previous_next").val("");
+        } else if (btn == 'last_month') {
+            // $("#date_action").val("last_month");
+            // $("#date_previous_next").val("");
+        } else if (btn == 'previous') {
+            // $("#date_previous_next").val("previous");
+        } else if (btn == 'next') {
+            // $("#date_previous_next").val("next");
+        }
+
+        listAjax();
+    });
+
 var input = document.getElementById("search");
 
 input.addEventListener("keyup", function(event) {
@@ -105,14 +156,18 @@ input.addEventListener("keyup", function(event) {
 $("#btn-search").on("click", function(){
     listAjax();
 });
+
 function listAjax() {
     let search = $("#search").val();
     // let search2 = $("#status_complaints").val();
     let search2 = $( "#status_complaints option:selected" ).val();
+    let sort_datetime = $( "#sort_datetime option:selected" ).val();
+    let startdate = $("#startdate").val();
+    let todate = $("#todate").val();
     // var capacityValue = $('select.operations-supplier').find(':selected').data('capacity');
     // let search2 = $(this).data("id");
     let url = "{{ route('Report.listAjax') }}";
-    // console.log(search2);
+    // console.log(sort_datetime);
 
     $.ajax({
         url: url,
@@ -121,6 +176,9 @@ function listAjax() {
         data: {
             search: search,
             status_complaints: search2,
+            "startdate": startdate,
+            "todate": todate,
+            "sort_datetime": sort_datetime,
         },
         dataType: "json",
         beforeSend: function() {
@@ -128,6 +186,8 @@ function listAjax() {
         },
         success: function(res) {
             let html = "";
+            $("#startdate").val(res.startdate);
+            $("#todate").val(res.todate);
             if( res.status==1 ) {
                 if( res.reports.length > 0 ) {
                     $(res.reports).each(function(k,v) {

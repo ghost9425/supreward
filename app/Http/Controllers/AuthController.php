@@ -13,7 +13,7 @@ class AuthController extends Controller
         $user = auth()->user();
 
         if( !empty($user) ) {
-            return redirect()->route('Complaint.index');
+            return redirect()->route('Dashboard.index');
         }
 
         return view('login.index');
@@ -36,7 +36,7 @@ class AuthController extends Controller
             $user = Auth::user();
 
             if( !empty($user) ) {
-                return redirect()->route('Complaint.index');
+                return redirect()->route('Dashboard.index');
             }
         }
 
@@ -55,7 +55,7 @@ class AuthController extends Controller
             $user = Auth::user();
 
             if( !empty($user) ) {
-                $url = route('Complaint.index');
+                $url = route('Dashboard.index');
             }
 
             return response()->json([

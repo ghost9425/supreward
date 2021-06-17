@@ -81,6 +81,11 @@
                             <label class="main">Company</label>
                         </a>
                     </li> --}}
+                    <li id="menuDashboard" class="menuMain">
+                        <a href="{{ route('Dashboard.index') }}" class="collapsible-header waves-effect {{ ($layout_page=='dashboard')?'active':'' }}"><i class="sv-slim-icon fas fa-dashboard"></i>
+                            <label class="main">Dashboard</label>
+                        </a>
+                    </li>
                     <li id="menuCompany" class="menuMain">
                         <a class="collapsible-header waves-effect arrow-r {{ ($layout_page=='complaint')?'active':'' }}">
                             <i class="sv-slim-icon fas fa-payment fa-angle-double-left"></i>

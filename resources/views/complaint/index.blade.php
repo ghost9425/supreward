@@ -45,14 +45,13 @@
                                 <th style="width: 40%;">Detaill</th>
                                 <th style="width: 15%;">image</th>
                                 <th style="width: 10%;">Status</th>
-                                <th>Last Complaint date</th>
-                                <th style="width: 10%">Edit</th>
+                                <th >Last Complaint date</th>
+                                <th style="width: 5%">Edit</th>
                             </tr>
                         </thead>
                         <tbody id="tb-body-complaint"></tbody>
                         <tfoot class="rgba-yellow-slight">
                             <tr class="total">
-                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>

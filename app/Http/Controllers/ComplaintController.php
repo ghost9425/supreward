@@ -82,7 +82,7 @@ class ComplaintController extends Controller
                     "<a class ='Mitr' href ='img/complaints/".$complaint->image."' width='100%' data-toggle='lightbox'>
                         <img src='img/complaints/" . $complaint->image . "' width='50'";
                 }
-                $complaints[$key]->updated = date('d-m-Y H:i', strtotime($complaint->updated_at) );
+                $complaints[$key]->updated = date('d-m-Y', strtotime($complaint->updated_at) );
 
             }
         }

@@ -59,7 +59,7 @@
                                         <option value="" disabled selected>Enter Problem</option>
                                         @if( count($problems) > 0 )
                                             @foreach( $problems as $problem )
-                                            <option value="{{ $problem->problem }}">{{ $problem->problem }}</option>
+                                            <option value="{{ ($problem->problem=="อื่น ๆ")?'6':$problem->problem }}">{{ $problem->problem }}</option>
                                             @endforeach
                                         @endif
                                     </select>
@@ -107,7 +107,13 @@
 <script>
 
 $(document).on( 'change', 'select#problem', function () {
-    $("#detail").val($(this).val());
+    let problem_alert = $( "#problem option:selected" ).val()
+    if (problem_alert != 6){
+        $("#detail").val($(this).val());
+
+    } else {
+        $("#detail").val("");
+    }
 });
 
 $( "#form-add-complaint" ).on('submit', function(e) {

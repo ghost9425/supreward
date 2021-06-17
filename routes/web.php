@@ -9,6 +9,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\CommonProblemController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\DashboardController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,6 +32,9 @@ Route::get('/logout', [AuthController::class, 'logoutSave'])->name('Auth.logoutS
 
 Route::group( [ 'middleware' => ['auth'] ], function () {
     // Route::get('/test', [TestController::class, 'test'])->name('Test.login');
+
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('Dashboard.index');
+
     Route::get('/complaint', [ComplaintController::class, 'index'])->name('Complaint.index');
     Route::get('/complaint/add', [ComplaintController::class, 'add'])->name('Complaint.add');
     Route::post('/complaint/add-save', [ComplaintController::class, 'addSave'])->name('Complaint.addSave');

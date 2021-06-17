@@ -67,7 +67,9 @@
                             <div class="col-4">
                                 <div class="select-outline">
                                     <select class="mdb-select initialized" id="status_complaints" name="status_complaints">
-                                        <option value={{$complaintsPrefixCollection->complaints_success}} selected>{{($complaintsPrefixCollection->complaints_success==0)?'Pending':'Success'}} (Selected)</option>
+                                        <option value={{$complaintsPrefixCollection->complaints_success}} selected>
+                                            {{($complaintsPrefixCollection->complaints_success==0)?'Pending':'Success'}} (Selected)
+                                        </option>
                                         {{-- <option value="0" disabled selected>Enter Problem</option> --}}
                                         <option value="0" >Pending</option>
                                         <option value="1" >Success</option>

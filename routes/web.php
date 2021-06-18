@@ -34,6 +34,7 @@ Route::group( [ 'middleware' => ['auth'] ], function () {
     // Route::get('/test', [TestController::class, 'test'])->name('Test.login');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('Dashboard.index');
+    Route::get('/dashboard/list-ajax', [DashboardController::class, 'listAjax'])->name('Dashboard.listAjax');
 
     Route::get('/complaint', [ComplaintController::class, 'index'])->name('Complaint.index');
     Route::get('/complaint/add', [ComplaintController::class, 'add'])->name('Complaint.add');

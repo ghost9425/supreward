@@ -82,7 +82,7 @@ class ReportController extends Controller
                 $q->where('complants_prefix_collection.updated_at', 'LIKE', '%'.$lastmonth.'%');
             });
         } else {
-            
+
         }
 
 
@@ -90,7 +90,6 @@ class ReportController extends Controller
             $query->where( function($q) use ($search) {
                 $q->where('complaints.name', 'LIKE', '%'.$search.'%')
                 ->orWhere('prefix.name', 'LIKE', '%'.$search.'%');
-                // ->orWhere('complaints.name', 'LIKE', '%'.$search.'%');
             });
         }
 

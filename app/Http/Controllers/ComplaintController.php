@@ -180,7 +180,9 @@ class ComplaintController extends Controller
         $complaintsPrefixCollection->complants_id = $complaints->id;
         $complaintsPrefixCollection->prefix_id = $complaints->prefix_id;
         $complaintsPrefixCollection->complaints_success = '0';
+        $complaintsPrefixCollection->date = date('Y-m-d');
         $complaintsPrefixCollection->save();
+
         // dd(prefix);
         return response()->json([
             'status' => '1',

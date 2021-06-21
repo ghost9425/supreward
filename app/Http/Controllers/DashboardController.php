@@ -11,40 +11,17 @@ class DashboardController extends Controller
 {
     public function index(Request $request)
     {
-        $today=date("Y-m-d");
+        // $today=date("Y-m-d");
 
-        $count_pending_dailys = DB::table('complants_prefix_collection')
-        ->join('complaints','complaints.id','complants_prefix_collection.complants_id')
-        ->select('complants_prefix_collection.complaints_success',DB::raw('count(complants_prefix_collection.complaints_success) as count_pending'))
-        ->where('complants_prefix_collection.complaints_success',0)
-        ->where('complants_prefix_collection.date',$today)
-        ->groupBy('complants_prefix_collection.complaints_success')
-        ->first();
+        // $a=date("Y-m-d");
+        // $today = DB::table('complaints')
+        // ->select(DB::raw("DATE_FORMAT(complaints.created_at,'%Y-%m-%d') AS date"),DB::raw('count(complaints.created_at) as count_pending'))
+        // // ->where('complants_prefix_collection.complaints_success',0)
+        // ->where(DB::raw("DATE_FORMAT(complaints.created_at,'%Y-%m-%d')"), $a)
+        // ->groupBy('complaints.created_at')
+        // ->get();
+        // dd($today);
 
-        $count_success_dailys = DB::table('complants_prefix_collection')
-        ->join('complaints','complaints.id','complants_prefix_collection.complants_id')
-        ->select('complants_prefix_collection.complaints_success',DB::raw('count(complants_prefix_collection.complaints_success) as count_success'))
-        ->where('complants_prefix_collection.complaints_success',1)
-        ->where('complants_prefix_collection.date',$today)
-        ->groupBy('complants_prefix_collection.complaints_success')
-        ->first();
-        // $count_today = DB::table('complants_prefix_collection')
-        // ->select('complants_prefix_collection.date',DB::raw('count(complants_prefix_collection.date) as count_all'))
-        // ->where('complants_prefix_collection.date',$today)
-        // ->groupBy('complants_prefix_collection.date')
-        // ->first();
-        // // $a=date("Y-m-d");
-        // // $today = DB::table('complaints')
-        // // ->select('complaints.created_at',DB::raw("DATE_FORMAT(complaints.created_at,'%Y-%m-%d') AS xxxx"),DB::raw('count(complaints.created_at) as count_pending'))
-        // // // ->where('complants_prefix_collection.complaints_success',0)
-        // // ->where(DB::raw("DATE_FORMAT(complaints.created_at,'%Y-%m-%d')"), $a)
-        // // ->groupBy('xxxx')
-        // // ->get();
-        // // dd($today);
-        // // $count_today = DB::table('complaints')
-        // // ->select('complaints.created_at',DB::raw("DATE_FORMAT(created_at,'%d')"))
-        // // ->groupBy('complaints.created_at')
-        // // ->first();
         // dd($count_pending_dailys,$count_success_dailys);
         return view('dashboard.index', [
             'layout_page' => 'dashboard',
@@ -81,9 +58,9 @@ class DashboardController extends Controller
         // dd($count_pending_dailys,$count_success_dailys);
         return response()->json([
             'status' => '1',
-            'count_pending_dailys' => $count_pending_dailys,
-            'count_success_dailys' => $count_success_dailys,
-            'count_today' => $count_today,
+            'count_pending_dailys' => $count_pending_dailys==null?0:$count_pending_dailys,
+            'count_success_dailys' => $count_success_dailys==null?0:$count_success_dailys,
+            'count_today' => $count_today==null?0:$count_today,
         ]);
     }
 

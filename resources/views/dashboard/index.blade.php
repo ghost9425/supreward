@@ -80,11 +80,11 @@ function getStatusAjax() {
             $('#myModalLoad').modal('hide');
             console.log(res);
             if( res.status == 1 ) {
-                // console.log(res.count_pending_dailys);
+                // console.log(res.status," = true");
                 let count_pending = res.count_pending_dailys.count_pending;
                 let count_success = res.count_success_dailys.count_success;
                 let count_today = res.count_today.count_all;
-                // console.log(count_pending);
+                // console.log(count_pending,count_success,count_today);
                 // let color_profitTomorrow = "";
                 // let color_profitMonth = "";
                 // let color_profitLastMonth = "";
@@ -93,17 +93,15 @@ function getStatusAjax() {
                 //     color_profitToday = "#e20c0c";
                 // }
 
-                // if( parseInt(res.profitTomorrow) < 0 ) {
-                //     color_profitTomorrow = "#e20c0c";
-                // }
-
-                // if( parseInt(res.profitMonth) < 0 ) {
-                //     color_profitMonth = "#e20c0c";
-                // }
-
-                // if( parseInt(res.profitLastMonth) < 0 ) {
-                //     color_profitLastMonth = "#e20c0c";
-                // }
+                if ( count_today === undefined ) {
+                    count_pending = 0;
+                    count_success = 0;
+                    count_today = 0;
+                } else if( count_pending === undefined) {
+                     count_pending = 0;
+                } else if ( count_success === undefined ) {
+                     count_success = 0;
+                }
 
                 $("#result_pending").html( "<span>" + count_pending + "</span>" );
                 $("#result_success").html( "<span>" + count_success + "</span>" + "</span> / <span>" + count_today + "</span>" );
@@ -112,7 +110,7 @@ function getStatusAjax() {
             }
         },
         error: function (xhr, status, error) {
-            $("#lbAlert").html("Invalid Get Status Ajax");
+            $("#lbAlert").html("Invalid Get Count Ajax");
             $('#myModalLoad').modal('hide');
             $('#modalAlert').modal('show');
         },

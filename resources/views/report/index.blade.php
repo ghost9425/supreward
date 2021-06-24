@@ -117,15 +117,15 @@ $(document).on("change", 'select#sort_datetime', function() {
         if (btn == 0) {
             // $("#date_action").val("today");
             // $("#date_previous_next").val("");
-            alert(btn);
+            // alert(btn);
         } else if (btn == 1) {
             // $("#date_action").val("yesterday");
             // $("#date_previous_next").val("");
-            alert(btn);
+            // alert(btn);
         } else if (btn == 2) {
             // $("#date_action").val("this_week");
             // $("#date_previous_next").val("");
-            alert(btn);
+            // alert(btn);
         } else if (btn == 'last_week') {
             // $("#date_action").val("last_week");
             // $("#date_previous_next").val("");

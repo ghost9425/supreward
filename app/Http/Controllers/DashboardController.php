@@ -6,31 +6,88 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\ComplaintsPrefixCollection;
 use App\Models\Complaints;
+use App\Models\Prefix;
 
 class DashboardController extends Controller
 {
     public function index(Request $request)
     {
-        // $today=date("Y-m-d");
+        $lastyear = date('Y', strtotime("-1 year"));
+        $lastmonth = date('Y-m', strtotime("-1 month"));
+        $yesterday = date('Y-m-d', strtotime("-1 days"));
+        $today = date("Y-m-d");
+        $thismonth = date('Y-m');
+        $thisyear = date("Y");
 
-        // $a=date("Y-m-d");
-        // $today = DB::table('complaints')
-        // ->select(DB::raw("DATE_FORMAT(complaints.created_at,'%Y-%m-%d') AS date"),DB::raw('count(complaints.created_at) as count_pending'))
-        // // ->where('complants_prefix_collection.complaints_success',0)
-        // ->where(DB::raw("DATE_FORMAT(complaints.created_at,'%Y-%m-%d')"), $a)
-        // ->groupBy('complaints.created_at')
-        // ->get();
-        // dd($today);
+        // dd($showdatenow);
+        // dd($lastyear,
+        // $lastmonth,
+        // $yesterday,
+        // $today,
+        // $thismonth,
+        // $thisyear);
 
-        // dd($count_pending_dailys,$count_success_dailys);
+        $count_today = DB::table('complants_prefix_collection')
+        ->select(DB::raw('count(complants_prefix_collection.date) as count_today'))
+        ->where('complants_prefix_collection.date', $today)
+        ->first();
+
+        $count_thismonth = DB::table('complants_prefix_collection')
+        ->select(DB::raw('count(complants_prefix_collection.date) as count_thismonth'))
+        ->where('complants_prefix_collection.date','LIKE', '%'.$thismonth.'%')
+        ->first();
+
+        $count_thisyear = DB::table('complants_prefix_collection')
+        ->select(DB::raw('count(complants_prefix_collection.date) as count_thisyear'))
+        ->where('complants_prefix_collection.date','LIKE', '%'.$thisyear.'%')
+        ->first();
+        // dd($count);
+
+        // $month_format = DB::raw( "DATE_FORMAT(complants_prefix_collection.date, '%Y-%m')" );
+        $count_yesterday = DB::table('complants_prefix_collection')
+        ->select(DB::raw('count(complants_prefix_collection.date) as count_yesterday'))
+        ->where('complants_prefix_collection.date', $yesterday)
+        ->first();
+
+        $count_lastmonth = DB::table('complants_prefix_collection')
+        ->select(DB::raw('count(complants_prefix_collection.date) as count_lastmonth'))
+        ->where('complants_prefix_collection.date','LIKE', '%'.$lastmonth.'%')
+        ->first();
+
+        $count_lastyear = DB::table('complants_prefix_collection')
+        ->select(DB::raw('count(complants_prefix_collection.date) as count_lastyear'))
+        ->where('complants_prefix_collection.date','LIKE', '%'.$lastyear.'%')
+        ->first();
+
+        // dd($count_thisyear,$count_lastyear);
+
+        $count_prefix = DB::table('prefix')
+        ->select(DB::raw('count(prefix.id) as count_all_prefix'))
+        ->first();
+        // dd($count_prefix);
+
+        // dd($countsum_prefix[0]);
+        // ->where('complants_prefix_collection.complaints_success', 0);
+
+        $prefixs = Prefix::orderBy('id','ASC')->get();
+
         return view('dashboard.index', [
             'layout_page' => 'dashboard',
+            'allprefix' => $count_prefix,
+            'prefixs' => $prefixs,
+            'count_lastyear' => $count_lastyear->count_lastyear,
+            'count_lastmonth' => $count_lastmonth->count_lastmonth,
+            'count_yesterday' => $count_yesterday->count_yesterday,
+            'count_today' => $count_today->count_today,
+            'count_thismonth' => $count_thismonth->count_thismonth,
+            'count_thisyear' => $count_thisyear->count_thisyear,
         ]);
     }
 
     public function listAjax(Request $request) {
 
         $today=date("Y-m-d");
+        $showdatenow = date("Y-m-d h:i:s");
 
         $count_pending_dailys = DB::table('complants_prefix_collection')
         ->join('complaints','complaints.id','complants_prefix_collection.complants_id')
@@ -55,12 +112,38 @@ class DashboardController extends Controller
         ->groupBy('complants_prefix_collection.date')
         ->first();
 
+        $filter_prefix = $request->sort_prefix;
+        $sort_prefix = DB::table('complants_prefix_collection')
+        ->select('complants_prefix_collection.prefix_id',DB::raw('count(complants_prefix_collection.prefix_id) as count_all'))
+        ->where('complants_prefix_collection.prefix_id',$filter_prefix)
+        ->groupBy('complants_prefix_collection.prefix_id')
+        ->first();
+        // if ($request->sort_prefix==0) {
+        //     $sort_prefix->where();
+        // }
+        // dd($sort_prefix);
         // dd($count_pending_dailys,$count_success_dailys);
+
+        $countsum_prefix = DB::table('complants_prefix_collection')
+        ->select('complants_prefix_collection.prefix_id', 'prefix.name',DB::raw('count(complants_prefix_collection.prefix_id) as countsum_prefix'))
+        ->join('prefix', 'prefix.id', 'complants_prefix_collection.prefix_id')
+        ->groupBy('prefix.name')
+        ->orderBy('countsum_prefix','DESC','complants_prefix_collection.date','ASC')
+        ->get();
+
+        $count_case = DB::table('complants_prefix_collection')
+        ->select(DB::raw('count(complants_prefix_collection.id) as count_all_case'))
+        ->first();
+
         return response()->json([
             'status' => '1',
             'count_pending_dailys' => $count_pending_dailys==null?0:$count_pending_dailys,
             'count_success_dailys' => $count_success_dailys==null?0:$count_success_dailys,
             'count_today' => $count_today==null?0:$count_today,
+            'sort_prefix' => $sort_prefix==null?0:$sort_prefix,
+            'count_case' => $count_case->count_all_case,
+            'show_date' => $showdatenow,
+            'countsum_prefix' => $countsum_prefix,
         ]);
     }
 

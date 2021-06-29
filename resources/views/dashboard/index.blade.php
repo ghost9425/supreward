@@ -189,6 +189,7 @@
         <div class="card mb-4">
             <div class="card-header" set-lan="text:Concurrent User/Peak">Detail Prefix</div>
             <div class="card-body">
+
                 <div class="row">
                     <div class="col-5 text-right">
                         <h6>Total Prefix:</h6>
@@ -217,7 +218,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="row mt-3">
                     <div class="col-5 text-right">
                         <h6>Total Case :</h6>
@@ -226,29 +226,13 @@
                         <h6 id="show_count"></h6>
                     </div>
                 </div>
-                {{-- <div class="row">
-                    <div class="col-5 text-right">
-                        <h6>Last Month :</h6>
-                    </div>
-                    <div class="col-7">
-                        <h6 id="#"></h6>
-                    </div>
-                </div>
 
-                <div class="row mt-3">
-                    <div class="col-5 text-right">
-                        <h6>This Year :</h6>
-                    </div>
-                    <div class="col-7">
-                        <h6 id="#"></h6>
-                    </div>
-                </div> --}}
             </div>
         </div>
     </div>
 </div>
 <div class="row">
-    <div class="col-12">
+    <div class="col-6">
         <div class="card mb-4">
             <div class="card-header">Chart Prefix</div>
             <div class="card-body">
@@ -290,14 +274,15 @@ function getStatusAjax() {
         },
         success: function(res) {
             $('#myModalLoad').modal('hide');
-            console.log(res);
+            // console.log(res);
             if( res.status == 1 ) {
                 // console.log(res.status," = true");
                 let count_pending = res.count_pending_dailys.count_pending;
                 let count_success = res.count_success_dailys.count_success;
                 let count_today = res.count_today.count_all;
                 let sumcount_prefix = res.countsum_prefix;
-                console.log(sumcount_prefix);
+
+                // console.log(sumcount_prefix);
                 // let count_case = res.count_all_case;
                 // console.log(res,res.count_case);
                 // let count_prefix = res.sort_prefix.count_all;
@@ -332,6 +317,14 @@ function getStatusAjax() {
                 // $("#result_success").html(  "<span style='color:"+color_profitMonth+"'>" + res.profitMonth + "</span> / <span style='color:"+color_profitLastMonth+"'>" + res.profitLastMonth + "</span>" );
                 // createProfitDaily(res.dayData,res.profitData,res.profitLastmontData, res.text_chart);
 
+
+
+                if (sumcount_prefix != "") {
+                    texttitile = "Browser Prefix";
+                } else {
+                    texttitile = "No Case / Prefix";
+                }
+
                 Highcharts.chart('container', {
                     chart: {
                         plotBackgroundColor: null,
@@ -343,7 +336,7 @@ function getStatusAjax() {
                         enabled: false
                     },
                     title: {
-                        text: 'Browser Prefix'
+                        text: texttitile
                     },
                     tooltip: {
                         pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -363,30 +356,60 @@ function getStatusAjax() {
                             showInLegend: true
                         }
                     },
+                    // series: (function() {
+                    //     var series = [];
+                    //     let temp = res.countsum_prefix;
+                    //         console.log(temp);
+                    //     for (var i = 0; i < 5; i++) {
+                    //         console.log(temp[i]);
+                    //         []
+                    //         series.push({
+                    //             name: 'Brands',
+                    //             colorByPoint: true,
+                    //             data: temp[i],
+                    //         });
+
+                    //     }
+                    //     console.log(series, temp);
+                    //     return series;
+                    // }())
+
                     series: [{
                         name: 'Brands',
                         colorByPoint: true,
-                        data: [{
-                            name: sumcount_prefix[0].name,
-                            y: sumcount_prefix[0].countsum_prefix,
-                            sliced: true,
-                            selected: true
-                        }, {
-                            name: sumcount_prefix[1].name,
-                            y: sumcount_prefix[1].countsum_prefix
-                        }, {
-                            name: sumcount_prefix[2].name,
-                            y: sumcount_prefix[2].countsum_prefix
-                        }, {
-                            name: sumcount_prefix[3].name,
-                            y: sumcount_prefix[3].countsum_prefix
-                        }, {
-                            name: sumcount_prefix[4].name,
-                            y: sumcount_prefix[4].countsum_prefix
-                        }, {
-                            name: sumcount_prefix[5].name,
-                            y: sumcount_prefix[5].countsum_prefix
-                        },]
+                        data: (function(){
+                            let data = [];
+                            let arr = res.countsum_prefix;
+
+                            if (arr == "") {
+                                console.log("null")
+                            } else {
+                                console.log("have data")
+                                if (arr.length != 0) {
+                                    console.log(arr);
+                                    for (i=0;i < arr.length;i++) {
+                                        console.log(i)
+                                        // for (j=0;i<6;j++) {
+                                        if (i<6) {
+                                            if (i==0){
+                                            data.push({
+                                                name: arr[i].name,
+                                                y: arr[i].y,
+                                                sliced: true,
+                                                selected: true
+                                            })
+                                            } else {
+                                                data.push({
+                                                    name: arr[i].name,
+                                                    y: arr[i].y,
+                                                })
+                                            }
+                                        }
+                                    }
+                                    return data
+                                }
+                            }
+                        }())
                     }]
                 });
             }

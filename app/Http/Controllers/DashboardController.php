@@ -8,6 +8,8 @@ use App\Models\ComplaintsPrefixCollection;
 use App\Models\Complaints;
 use App\Models\Prefix;
 
+use function PHPUnit\Framework\isEmpty;
+
 class DashboardController extends Controller
 {
     public function index(Request $request)
@@ -125,10 +127,10 @@ class DashboardController extends Controller
         // dd($count_pending_dailys,$count_success_dailys);
 
         $countsum_prefix = DB::table('complants_prefix_collection')
-        ->select('complants_prefix_collection.prefix_id', 'prefix.name',DB::raw('count(complants_prefix_collection.prefix_id) as countsum_prefix'))
+        ->select('complants_prefix_collection.prefix_id', 'prefix.name',DB::raw('count(complants_prefix_collection.prefix_id) as y'))
         ->join('prefix', 'prefix.id', 'complants_prefix_collection.prefix_id')
         ->groupBy('prefix.name')
-        ->orderBy('countsum_prefix','DESC','complants_prefix_collection.date','ASC')
+        ->orderBy('y','DESC','complants_prefix_collection.date','ASC')
         ->get();
 
         $count_case = DB::table('complants_prefix_collection')
@@ -143,7 +145,7 @@ class DashboardController extends Controller
             'sort_prefix' => $sort_prefix==null?0:$sort_prefix,
             'count_case' => $count_case->count_all_case,
             'show_date' => $showdatenow,
-            'countsum_prefix' => $countsum_prefix,
+            'countsum_prefix' => $countsum_prefix==isEmpty()?0:$countsum_prefix,
         ]);
     }
 

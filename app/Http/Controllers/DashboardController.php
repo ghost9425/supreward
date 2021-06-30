@@ -66,10 +66,54 @@ class DashboardController extends Controller
         $count_prefix = DB::table('prefix')
         ->select(DB::raw('count(prefix.id) as count_all_prefix'))
         ->first();
-        // dd($count_prefix);
 
-        // dd($countsum_prefix[0]);
-        // ->where('complants_prefix_collection.complaints_success', 0);
+        $countcase_one = DB::table('complaints')
+        ->select('complaints.detail as case_name',DB::raw('count(complaints.detail) as case_one'))
+        ->where('complaints.detail','LIKE','%'."พ้อยท์หาย".'%')
+        ->get();
+        // dd($countcase_one);
+
+        $countname_one = DB::table('complaints')
+
+        ->get();
+
+
+        $countcase_two = DB::table('complaints')
+        ->select(DB::raw('count(complaints.detail) as case_two'))
+        ->where('complaints.detail','LIKE','%'."พ้อยไม่อัพเดท".'%')
+        ->first();
+        $countcase_three = DB::table('complaints')
+        ->select(DB::raw('count(complaints.detail) as case_three'))
+        ->where('complaints.detail','LIKE','%'."เติมเงินมีปัญหา".'%')
+        ->first();
+        $countcase_four = DB::table('complaints')
+        ->select(DB::raw('count(complaints.detail) as case_four'))
+        ->where('complaints.detail','LIKE','%'."แลกเครดิตไม่เข้า".'%')
+        ->first();
+        $countcase_five = DB::table('complaints')
+        ->select(DB::raw('count(complaints.detail) as case_five'))
+        ->where('complaints.detail','LIKE','%'."พ้อยท์เกิน".'%')
+        ->orwhere('complaints.detail','LIKE','%'."แลกเยอะผิดปกติ".'%')
+        ->first();
+        $countcase_other = DB::table('complaints')
+        ->select(DB::raw('count(complaints.detail) as case_other'))
+        ->where('complaints.detail','NOT LIKE','%'."พ้อยท์หาย".'%')
+        ->where('complaints.detail','NOT LIKE','%'."พ้อยไม่อัพเดท".'%')
+        ->where('complaints.detail','NOT LIKE','%'."เติมเงินมีปัญหา".'%')
+        ->where('complaints.detail','NOT LIKE','%'."แลกเครดิตไม่เข้า".'%')
+        ->where('complaints.detail','NOT LIKE','%'."พ้อยท์เกิน".'%')
+        ->where('complaints.detail','NOT LIKE','%'."แลกเยอะผิดปกติ".'%')
+        ->first();
+
+
+
+        // dd($countcase_one,
+        // $countcase_two,
+        // $countcase_three,
+        // $countcase_four,
+        // $countcase_five,
+        // $countcase_other
+        // );
 
         $prefixs = Prefix::orderBy('id','ASC')->get();
 
@@ -83,6 +127,12 @@ class DashboardController extends Controller
             'count_today' => $count_today->count_today,
             'count_thismonth' => $count_thismonth->count_thismonth,
             'count_thisyear' => $count_thisyear->count_thisyear,
+            'countcase_one' => $countcase_one,
+            'countcase_two' => $countcase_two->case_two,
+            'countcase_three' => $countcase_three->case_three,
+            'countcase_four' => $countcase_four->case_four,
+            'countcase_five' => $countcase_five->case_five,
+            'countcase_other' => $countcase_other->case_other,
         ]);
     }
 
@@ -133,9 +183,65 @@ class DashboardController extends Controller
         ->orderBy('y','DESC','complants_prefix_collection.date','ASC')
         ->get();
 
+
         $count_case = DB::table('complants_prefix_collection')
         ->select(DB::raw('count(complants_prefix_collection.id) as count_all_case'))
         ->first();
+
+        $countcase_one = DB::table('complaints')
+        ->select('complaints.detail as case_name',DB::raw('count(complaints.detail) as case_one'))
+        ->where('complaints.detail','LIKE','%'."พ้อยท์หาย".'%')
+        ->get();
+
+        $countcase_two = DB::table('complaints')
+        ->select('complaints.detail as case_name',DB::raw('count(complaints.detail) as case_one'))
+        ->where('complaints.detail','LIKE','%'."พ้อยไม่อัพเดท".'%')
+        ->get();
+
+        $countcase_three = DB::table('complaints')
+        ->select('complaints.detail as case_name',DB::raw('count(complaints.detail) as case_one'))
+        ->where('complaints.detail','LIKE','%'."เติมเงินมีปัญหา".'%')
+        ->get();
+
+        $countcase_four = DB::table('complaints')
+        ->select('complaints.detail as case_name',DB::raw('count(complaints.detail) as case_one'))
+        ->where('complaints.detail','LIKE','%'."แลกเครดิตไม่เข้า".'%')
+        ->get();
+
+        $countcase_five = DB::table('complaints')
+        ->select('complaints.detail as case_name',DB::raw('count(complaints.detail) as case_one'))
+        ->where('complaints.detail','LIKE','%'."พ้อยท์เกิน".'%')
+        ->orwhere('complaints.detail','LIKE','%'."แลกเยอะผิดปกติ".'%')
+        ->get();
+
+        $countcase_other = DB::table('complaints')
+        ->select('complaints.detail as case_name',DB::raw('count(complaints.detail) as case_one'))
+        ->where('complaints.detail','NOT LIKE','%'."พ้อยท์หาย".'%')
+        ->where('complaints.detail','NOT LIKE','%'."พ้อยไม่อัพเดท".'%')
+        ->where('complaints.detail','NOT LIKE','%'."เติมเงินมีปัญหา".'%')
+        ->where('complaints.detail','NOT LIKE','%'."แลกเครดิตไม่เข้า".'%')
+        ->where('complaints.detail','NOT LIKE','%'."พ้อยท์เกิน".'%')
+        ->where('complaints.detail','NOT LIKE','%'."แลกเยอะผิดปกติ".'%')
+        ->get();
+
+        for ($i=0;$i<count($countcase_other);$i++){
+            ($countcase_other[$i]->case_name!=null?"อื่น ๆ":$countcase_other[$i]->case_name);
+        }
+
+        // dd($countcase_other);
+        $countall = [];
+        array_push($countall,$countcase_one[0]);
+        array_push($countall,$countcase_two[0]);
+        array_push($countall,$countcase_three[0]);
+        array_push($countall,$countcase_four[0]);
+        array_push($countall,$countcase_five[0]);
+        array_push($countall,$countcase_other[0]);
+        for ($i=0;$i<count($countall);$i++) {
+            if($countall[$i]->case_name === null) {
+                $countall[$i]->case_name = "Other case";
+
+            }
+        }
 
         return response()->json([
             'status' => '1',
@@ -146,6 +252,7 @@ class DashboardController extends Controller
             'count_case' => $count_case->count_all_case,
             'show_date' => $showdatenow,
             'countsum_prefix' => $countsum_prefix==isEmpty()?0:$countsum_prefix,
+            'countall' => $countall,
         ]);
     }
 

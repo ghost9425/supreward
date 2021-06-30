@@ -43,6 +43,13 @@
 @endsection
 
 @section('content')
+{{-- @dd($countcase_one) --}}
+<input id="caseone" type="hidden" value={{$countcase_one}}>
+<input id="casetwo" type="hidden" value={{$countcase_two}}>
+<input id="casethree" type="hidden" value={{$countcase_three}}>
+<input id="casefour" type="hidden" value={{$countcase_four}}>
+<input id="casefive" type="hidden" value={{$countcase_five}}>
+<input id="caseother" type="hidden" value={{$countcase_other}}>
 {{-- @dd() --}}
 <div class="col-12">
     <div class="title-holder">
@@ -244,6 +251,19 @@
             </div>
         </div>
     </div>
+
+    <div class="col-6">
+        <div class="card mb-4">
+            <div class="card-header">Chart Case</div>
+            <div class="card-body">
+                <figure class="highcharts-figure">
+                    <div id="container2"></div>
+                    <p class="highcharts-description">
+                    </p>
+                </figure>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection
 
@@ -258,9 +278,26 @@ $(document).on( 'change', 'select#sort_prefix', function () {
     // alert("status");
 });
 
+
+
 function getStatusAjax() {
     let url = "{{ route('Dashboard.listAjax') }}";
     let sort_prefix = $( "#sort_prefix option:selected" ).val();
+
+    // let count_case = [$("#caseone").val(),
+    //     $("#casetwo").val(),
+    //     $("#casethree").val(),
+    //     $("#casefour").val(),
+    //     $("#casefive").val(),
+    //     $("#caseother").val()]
+    //     count_case.sort(function(a,b){
+    //         return b-a
+    //     });
+    // console.log(count_case)
+    // let arr_countcase = count_case.map((i) => Number(i));
+    // console.log(arr_countcase)
+
+
     $.ajax({
         url: url,
         type: "GET",
@@ -274,27 +311,13 @@ function getStatusAjax() {
         },
         success: function(res) {
             $('#myModalLoad').modal('hide');
-            // console.log(res);
+            console.log(res.countall);
             if( res.status == 1 ) {
                 // console.log(res.status," = true");
                 let count_pending = res.count_pending_dailys.count_pending;
                 let count_success = res.count_success_dailys.count_success;
                 let count_today = res.count_today.count_all;
                 let sumcount_prefix = res.countsum_prefix;
-
-                // console.log(sumcount_prefix);
-                // let count_case = res.count_all_case;
-                // console.log(res,res.count_case);
-                // let count_prefix = res.sort_prefix.count_all;
-                // console.log(count_prefix);
-
-                // let color_profitTomorrow = "";
-                // let color_profitMonth = "";
-                // let color_profitLastMonth = "";
-
-                // if( count_prefix === undefined) {
-                //     count_prefix = 0;
-                // }
 
                 if ( count_today === undefined ) {
                     count_pending = 0;
@@ -356,39 +379,18 @@ function getStatusAjax() {
                             showInLegend: true
                         }
                     },
-                    // series: (function() {
-                    //     var series = [];
-                    //     let temp = res.countsum_prefix;
-                    //         console.log(temp);
-                    //     for (var i = 0; i < 5; i++) {
-                    //         console.log(temp[i]);
-                    //         []
-                    //         series.push({
-                    //             name: 'Brands',
-                    //             colorByPoint: true,
-                    //             data: temp[i],
-                    //         });
-
-                    //     }
-                    //     console.log(series, temp);
-                    //     return series;
-                    // }())
-
                     series: [{
                         name: 'Brands',
                         colorByPoint: true,
                         data: (function(){
                             let data = [];
                             let arr = res.countsum_prefix;
-
                             if (arr == "") {
-                                console.log("null")
+                                // console.log("null")
                             } else {
                                 console.log("have data")
                                 if (arr.length != 0) {
-                                    console.log(arr);
                                     for (i=0;i < arr.length;i++) {
-                                        console.log(i)
                                         // for (j=0;i<6;j++) {
                                         if (i<6) {
                                             if (i==0){
@@ -408,6 +410,67 @@ function getStatusAjax() {
                                     }
                                     return data
                                 }
+                            }
+                        }())
+                    }]
+                });
+                Highcharts.chart('container2', {
+                    chart: {
+                        plotBackgroundColor: null,
+                        plotBorderWidth: null,
+                        plotShadow: false,
+                        type: 'pie'
+                    },
+                    title: {
+                        text: 'Browser Case'
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                    },
+                    accessibility: {
+                        point: {
+                            valueSuffix: '%'
+                        }
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                            }
+                        }
+                    },
+                    series: [{
+                        name: 'Total case',
+                        colorByPoint: true,
+                        data: (function(){
+                            let data = [];
+                            let count_case = res.countall;
+                            // console.log(count_case);
+                            function compare (a,b) {
+                                return b.case_one - a.case_one
+                            }
+                            count_case.sort( compare );
+                            // console.log(count_case.sort( compare ));
+                            if (count_case.sort( compare ).length !=0) {
+                                for (i=0;i < count_case.sort( compare ).length;i++) {
+                                    if (i==0) {
+                                        data.push({
+                                            name: count_case[i].case_name,
+                                            y: count_case[i].case_one,
+                                            sliced: true,
+                                            selected: true
+                                        })
+                                    } else {
+                                        data.push({
+                                            name: count_case[i].case_name,
+                                            y: count_case[i].case_one,
+                                        })
+                                    }
+                                }
+                                return data
                             }
                         }())
                     }]

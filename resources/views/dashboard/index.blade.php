@@ -43,14 +43,6 @@
 @endsection
 
 @section('content')
-{{-- @dd($countcase_one) --}}
-<input id="caseone" type="hidden" value={{$countcase_one}}>
-<input id="casetwo" type="hidden" value={{$countcase_two}}>
-<input id="casethree" type="hidden" value={{$countcase_three}}>
-<input id="casefour" type="hidden" value={{$countcase_four}}>
-<input id="casefive" type="hidden" value={{$countcase_five}}>
-<input id="caseother" type="hidden" value={{$countcase_other}}>
-{{-- @dd() --}}
 <div class="col-12">
     <div class="title-holder">
         <h1><b>Dashboard</b></h1>
@@ -140,51 +132,51 @@
                 </div>
                 <div class="col-6">
                     <div class="row">
-                        <div class="col-6 text-right">
-                            <h6>Today :</h6>
+                        <div class="col-9 text-right">
+                            <h6>พ้อยท์หาย :</h6>
                         </div>
-                        <div class="col-6">
-                            <h6 id="#">{{$count_today}}</h6>
+                        <div class="col-3">
+                            <h6 id="case1"></h6>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-6 text-right">
-                            <h6>Yesterday :</h6>
+                        <div class="col-9 text-right">
+                            <h6>พ้อยไม่อัพเดท :</h6>
                         </div>
-                        <div class="col-6">
-                            <h6 id="#">{{$count_yesterday}}</h6>
+                        <div class="col-3">
+                            <h6 id="case2"></h6>
                         </div>
                     </div>
                     <div class="row mt-3">
-                        <div class="col-6 text-right">
-                            <h6>This Month :</h6>
+                        <div class="col-9 text-right">
+                            <h6>เติมเงินมีปัญหา :</h6>
                         </div>
-                        <div class="col-6">
-                            <h6 id="#">{{$count_thismonth}}</h6>
+                        <div class="col-3">
+                            <h6 id="case3"></h6>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-6 text-right">
-                            <h6>Last Month :</h6>
+                        <div class="col-9 text-right">
+                            <h6>แลกเครดิตไม่เข้า :</h6>
                         </div>
-                        <div class="col-6">
-                            <h6 id="#">{{$count_lastmonth}}</h6>
+                        <div class="col-3">
+                            <h6 id="case4"></h6>
                         </div>
                     </div>
                     <div class="row mt-3">
-                        <div class="col-6 text-right">
-                            <h6>This Year :</h6>
+                        <div class="col-9 text-right">
+                            <h6>พ้อยท์เกิน,แลกเยอะผิดปกติ :</h6>
                         </div>
-                        <div class="col-6">
-                            <h6 id="#">{{$count_thisyear}}</h6>
+                        <div class="col-3">
+                            <h6 id="case5"></h6>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-6 text-right">
-                            <h6>Last Year :</h6>
+                    <div class="row ">
+                        <div class="col-9 text-right">
+                            <h6>อื่น ๆ :</h6>
                         </div>
-                        <div class="col-6">
-                            <h6 id="#">{{$count_lastyear}}</h6>
+                        <div class="col-3">
+                            <h6 id="case6"></h6>
                         </div>
                     </div>
                 </div>
@@ -197,7 +189,7 @@
             <div class="card-header" set-lan="text:Concurrent User/Peak">Detail Prefix</div>
             <div class="card-body">
 
-                <div class="row">
+                <div class="row mt-2">
                     <div class="col-5 text-right">
                         <h6>Total Prefix:</h6>
                     </div>
@@ -206,7 +198,7 @@
                         <h6></h6>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row mt-3">
                     <div class="col-5 text-right align-self-center">
                         <h6>Prefix :</h6>
                     </div>
@@ -233,7 +225,14 @@
                         <h6 id="show_count"></h6>
                     </div>
                 </div>
-
+                <div class="row mt-3">
+                    <div class="col-5 text-right">
+                        <h6>Hits case :</h6>
+                    </div>
+                    <div class="col-7">
+                        <h6 id="hit_case"></h6>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -284,20 +283,6 @@ function getStatusAjax() {
     let url = "{{ route('Dashboard.listAjax') }}";
     let sort_prefix = $( "#sort_prefix option:selected" ).val();
 
-    // let count_case = [$("#caseone").val(),
-    //     $("#casetwo").val(),
-    //     $("#casethree").val(),
-    //     $("#casefour").val(),
-    //     $("#casefive").val(),
-    //     $("#caseother").val()]
-    //     count_case.sort(function(a,b){
-    //         return b-a
-    //     });
-    // console.log(count_case)
-    // let arr_countcase = count_case.map((i) => Number(i));
-    // console.log(arr_countcase)
-
-
     $.ajax({
         url: url,
         type: "GET",
@@ -311,13 +296,18 @@ function getStatusAjax() {
         },
         success: function(res) {
             $('#myModalLoad').modal('hide');
-            console.log(res.countall);
+            // console.log(res.countall);
             if( res.status == 1 ) {
-                // console.log(res.status," = true");
                 let count_pending = res.count_pending_dailys.count_pending;
                 let count_success = res.count_success_dailys.count_success;
                 let count_today = res.count_today.count_all;
                 let sumcount_prefix = res.countsum_prefix;
+                let hit_case = res.countall;
+
+                for(name=0;name<hit_case.length;name++)
+                console.log(hit_case[name]);
+
+                $("#case1").html(hit_case[0].case_one);
 
                 if ( count_today === undefined ) {
                     count_pending = 0;
@@ -334,13 +324,21 @@ function getStatusAjax() {
                     $("#show_count").html(res.sort_prefix==0?res.sort_prefix:res.sort_prefix.count_all);
                 }
 
+                function hitcase (a,b) {
+                    return b.case_one - a.case_one
+                }
+
+                for (let i = 0; i < hit_case.sort( hitcase ).length; i++)
+
+                // let isBelowThreshold = (currentValue) => currentValue = hitcase[i].case_one;
+
+
+                $("#hit_case").html(hit_case.sort( hitcase )[0].case_name=="Case"?"No Case":hit_case.sort( hitcase )[0].case_name);
                 $("#time,#time2").html(res.show_date);
                 $("#result_pending").html( "<span>" + count_pending + "</span>" );
                 $("#result_success").html( "<span>" + count_success + "</span>" + "</span> / <span>" + count_today + "</span>" );
                 // $("#result_success").html(  "<span style='color:"+color_profitMonth+"'>" + res.profitMonth + "</span> / <span style='color:"+color_profitLastMonth+"'>" + res.profitLastMonth + "</span>" );
                 // createProfitDaily(res.dayData,res.profitData,res.profitLastmontData, res.text_chart);
-
-
 
                 if (sumcount_prefix != "") {
                     texttitile = "Browser Prefix";
@@ -421,9 +419,22 @@ function getStatusAjax() {
                         plotShadow: false,
                         type: 'pie'
                     },
-                    title: {
-                        text: 'Browser Case'
+                    credits: {
+                        enabled: false
                     },
+                    title: {
+                        text: (function(){
+                            if (hit_case[0].case_name == "Case") {
+                                text= "Empty Case";
+                            } else {
+                                text = "Case"
+                            }
+                            return text
+                        }())
+                    },
+                    // title: {
+                    //     text: 'Browser Case'
+                    // },
                     tooltip: {
                         pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
                     },

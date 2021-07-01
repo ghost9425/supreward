@@ -78,43 +78,6 @@ class DashboardController extends Controller
         ->get();
 
 
-        $countcase_two = DB::table('complaints')
-        ->select(DB::raw('count(complaints.detail) as case_two'))
-        ->where('complaints.detail','LIKE','%'."พ้อยไม่อัพเดท".'%')
-        ->first();
-        $countcase_three = DB::table('complaints')
-        ->select(DB::raw('count(complaints.detail) as case_three'))
-        ->where('complaints.detail','LIKE','%'."เติมเงินมีปัญหา".'%')
-        ->first();
-        $countcase_four = DB::table('complaints')
-        ->select(DB::raw('count(complaints.detail) as case_four'))
-        ->where('complaints.detail','LIKE','%'."แลกเครดิตไม่เข้า".'%')
-        ->first();
-        $countcase_five = DB::table('complaints')
-        ->select(DB::raw('count(complaints.detail) as case_five'))
-        ->where('complaints.detail','LIKE','%'."พ้อยท์เกิน".'%')
-        ->orwhere('complaints.detail','LIKE','%'."แลกเยอะผิดปกติ".'%')
-        ->first();
-        $countcase_other = DB::table('complaints')
-        ->select(DB::raw('count(complaints.detail) as case_other'))
-        ->where('complaints.detail','NOT LIKE','%'."พ้อยท์หาย".'%')
-        ->where('complaints.detail','NOT LIKE','%'."พ้อยไม่อัพเดท".'%')
-        ->where('complaints.detail','NOT LIKE','%'."เติมเงินมีปัญหา".'%')
-        ->where('complaints.detail','NOT LIKE','%'."แลกเครดิตไม่เข้า".'%')
-        ->where('complaints.detail','NOT LIKE','%'."พ้อยท์เกิน".'%')
-        ->where('complaints.detail','NOT LIKE','%'."แลกเยอะผิดปกติ".'%')
-        ->first();
-
-
-
-        // dd($countcase_one,
-        // $countcase_two,
-        // $countcase_three,
-        // $countcase_four,
-        // $countcase_five,
-        // $countcase_other
-        // );
-
         $prefixs = Prefix::orderBy('id','ASC')->get();
 
         return view('dashboard.index', [
@@ -127,12 +90,6 @@ class DashboardController extends Controller
             'count_today' => $count_today->count_today,
             'count_thismonth' => $count_thismonth->count_thismonth,
             'count_thisyear' => $count_thisyear->count_thisyear,
-            'countcase_one' => $countcase_one,
-            'countcase_two' => $countcase_two->case_two,
-            'countcase_three' => $countcase_three->case_three,
-            'countcase_four' => $countcase_four->case_four,
-            'countcase_five' => $countcase_five->case_five,
-            'countcase_other' => $countcase_other->case_other,
         ]);
     }
 
@@ -238,10 +195,11 @@ class DashboardController extends Controller
         array_push($countall,$countcase_other[0]);
         for ($i=0;$i<count($countall);$i++) {
             if($countall[$i]->case_name === null) {
-                $countall[$i]->case_name = "Other case";
+                $countall[$i]->case_name = "Case";
 
             }
         }
+        // dd($countall);
 
         return response()->json([
             'status' => '1',
@@ -254,6 +212,7 @@ class DashboardController extends Controller
             'countsum_prefix' => $countsum_prefix==isEmpty()?0:$countsum_prefix,
             'countall' => $countall,
         ]);
+
     }
 
     public function getResultAjax(Request $request) {

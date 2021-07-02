@@ -39,7 +39,7 @@
                             <div class="col-4">
                                 <div class="select-outline">
                                     <select class="mdb-select initialized" id="prefix" name="prefix" searchable="Search here.." style='text-transform:uppercase'>
-                                        <option value="" disabled selected>Select PREFIX</option>
+                                        <option value="" selected>Select PREFIX</option>
                                         @if( count($prefixs) > 0 )
                                             @foreach( $prefixs as $prefix )
                                             <option value="{{ $prefix->id }}">{{ $prefix->name }}</option>
@@ -56,10 +56,10 @@
                             <div class="col-4">
                                 <div class="select-outline">
                                     <select class="mdb-select initialized" id="problem" name="problem" searchable="Search here..">
-                                        <option value="" disabled selected>Enter Problem</option>
+                                        <option value="" selected>Enter Problem</option>
                                         @if( count($problems) > 0 )
                                             @foreach( $problems as $problem )
-                                            <option value="{{ ($problem->problem=="อื่น ๆ")?'6':$problem->problem }}">{{ $problem->problem }}</option>
+                                            <option value=" {{$problem->id }}">{{ $problem->problem }}</option>
                                             @endforeach
                                         @endif
                                     </select>
@@ -110,7 +110,17 @@ $(document).on( 'change', 'select#problem', function () {
     let problem_alert = $( "#problem option:selected" ).val()
     if (problem_alert != 6){
         $("#detail").val($(this).val());
-
+        if (problem_alert == 1) {
+            $("#detail").val("พ้อยท์หาย");
+        } else if (problem_alert == 2) {
+            $("#detail").val("พ้อยไม่อัพเดท");
+        } else if (problem_alert == 3) {
+            $("#detail").val("เติมเงินมีปัญหา");
+        } else if (problem_alert == 4) {
+            $("#detail").val("แลกเครดิตไม่เข้า");
+        } else if (problem_alert == 5) {
+            $("#detail").val("พ้อยท์เกิน,แลกเยอะผิดปกติ");
+        }
     } else {
         $("#detail").val("");
     }
@@ -122,6 +132,7 @@ $( "#form-add-complaint" ).on('submit', function(e) {
     let name = $("#name").val().trim();
     let prefix = $("#prefix").val().trim();
     let detail = $("#detail").val().trim();
+    let problem = $("#problem").val().trim();
     let alert = "";
 
     if(!name) {
@@ -138,12 +149,20 @@ $( "#form-add-complaint" ).on('submit', function(e) {
         return false;
     }
 
+    if(!problem) {
+        alert = "Please enter 'Type Problem'";
+        $("#lbAlert").html(alert);
+        $('#modalAlert').modal('show');
+        return false;
+    }
+
     if(!detail) {
         alert = "Please enter 'Complaint detail'";
         $("#lbAlert").html(alert);
         $('#modalAlert').modal('show');
         return false;
     }
+
 
     $.ajax({
         url: "{{route('Complaint.addSave')}}",

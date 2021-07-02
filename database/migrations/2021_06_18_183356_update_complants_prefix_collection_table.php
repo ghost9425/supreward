@@ -15,6 +15,7 @@ class UpdateComplantsPrefixCollectionTable extends Migration
     {
         Schema::table('complants_prefix_collection', function (Blueprint $table) {
             $table->date('date')->after('complaints_success');
+
         });
     }
 

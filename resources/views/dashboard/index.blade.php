@@ -227,7 +227,7 @@
                 </div>
                 <div class="row mt-3">
                     <div class="col-5 text-right">
-                        <h6>Hits case :</h6>
+                        <h6>All Prefixs Hits Case :</h6>
                     </div>
                     <div class="col-7">
                         <h6 id="hit_case"></h6>
@@ -308,6 +308,12 @@ function getStatusAjax() {
                 console.log(hit_case[name]);
 
                 $("#case1").html(hit_case[0].case_one);
+                $("#case2").html(hit_case[1].case_one);
+                $("#case3").html(hit_case[2].case_one);
+                $("#case4").html(hit_case[3].case_one);
+                $("#case5").html(hit_case[4].case_one);
+                $("#case6").html(hit_case[5].case_one);
+
 
                 if ( count_today === undefined ) {
                     count_pending = 0;

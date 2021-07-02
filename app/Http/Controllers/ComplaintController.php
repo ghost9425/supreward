@@ -170,20 +170,19 @@ class ComplaintController extends Controller
             $file->move(public_path('img/complaints/'),$filename);
             $complaints->image = $filename;
         } else {
-            // return $request;
             $complaints->image = '';
         }
 
         $complaints->save();
-        // dd($complaints);
+
         $complaintsPrefixCollection = new ComplaintsPrefixCollection;
         $complaintsPrefixCollection->complants_id = $complaints->id;
         $complaintsPrefixCollection->prefix_id = $complaints->prefix_id;
+        $complaintsPrefixCollection->problem_id = $request->problem;
         $complaintsPrefixCollection->complaints_success = '0';
         $complaintsPrefixCollection->date = date('Y-m-d');
         $complaintsPrefixCollection->save();
 
-        // dd(prefix);
         return response()->json([
             'status' => '1',
             'mgs' => 'Add Complaints Success'

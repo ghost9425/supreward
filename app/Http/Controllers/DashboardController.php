@@ -180,9 +180,14 @@ class DashboardController extends Controller
         ->where('complaints.detail','NOT LIKE','%'."พ้อยท์เกิน".'%')
         ->where('complaints.detail','NOT LIKE','%'."แลกเยอะผิดปกติ".'%')
         ->get();
+        // dd($countcase_other);
 
         for ($i=0;$i<count($countcase_other);$i++){
-            ($countcase_other[$i]->case_name!=null?"อื่น ๆ":$countcase_other[$i]->case_name);
+            if ($countcase_other[$i]!= "") {
+                $countcase_other[$i]->case_name = "อื่น ๆ";
+            } else {
+                $countcase_other[$i]->case_name;
+            }
         }
 
         // dd($countcase_other);

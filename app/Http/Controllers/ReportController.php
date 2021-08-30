@@ -38,7 +38,8 @@ class ReportController extends Controller
 
     public function listAjax(Request $request) {
 
-        $search = $request->search;
+
+        $search = str_replace(" ","",$request->search);
         $search2 = $request->status_complaints;
 
         $startdate = $request->startdate;
